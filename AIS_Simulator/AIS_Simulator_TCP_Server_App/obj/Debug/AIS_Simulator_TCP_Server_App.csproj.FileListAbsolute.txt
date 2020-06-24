@@ -14,7 +14,6 @@ C:\Users\Normandy SR-2\Documents\MC-CM_COOP_Project_Files\AIS_Simulator\AIS_Simu
 C:\Users\Normandy SR-2\Documents\MC-CM_COOP_Project_Files\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App\obj\Debug\AIS_Simulator_TCP_Server_App.pdb
 C:\Users\Normandy SR-2\Documents\MC-CM_COOP_Project_Files\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App\bin\Debug\SimpleTCP.dll
 C:\Users\Normandy SR-2\Documents\MC-CM_COOP_Project_Files\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App\obj\Debug\AIS_Simulator_TCP_Server_App.csproj.CopyComplete
-C:\Users\Normandy SR-2\Documents\MC-CM_COOP_Project_Files\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App\obj\Debug\AIS_Simulator_TCP_Server_App.csprojAssemblyReference.cache
 C:\Users\Normandy SR-2\Documents\MC-CM_COOP_Project_Files\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App\bin\Debug\CommonServiceLocator.dll
 C:\Users\Normandy SR-2\Documents\MC-CM_COOP_Project_Files\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App\bin\Debug\GalaSoft.MvvmLight.dll
 C:\Users\Normandy SR-2\Documents\MC-CM_COOP_Project_Files\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App\bin\Debug\GalaSoft.MvvmLight.Extras.dll
@@ -26,3 +25,7 @@ C:\Users\Normandy SR-2\Documents\MC-CM_COOP_Project_Files\AIS_Simulator\AIS_Simu
 C:\Users\Normandy SR-2\Documents\MC-CM_COOP_Project_Files\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App\bin\Debug\GalaSoft.MvvmLight.Extras.xml
 C:\Users\Normandy SR-2\Documents\MC-CM_COOP_Project_Files\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App\bin\Debug\GalaSoft.MvvmLight.Platform.pdb
 C:\Users\Normandy SR-2\Documents\MC-CM_COOP_Project_Files\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App\bin\Debug\GalaSoft.MvvmLight.Platform.xml
+C:\Users\Normandy SR-2\Documents\MC-CM_COOP_Project_Files\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Normandy SR-2\Documents\MC-CM_COOP_Project_Files\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App\obj\Debug\UserControls\UserControlMainWindow.g.cs
+C:\Users\Normandy SR-2\Documents\MC-CM_COOP_Project_Files\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App\obj\Debug\UserControls\UserControlMainWindow.baml
+C:\Users\Normandy SR-2\Documents\MC-CM_COOP_Project_Files\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App\obj\Debug\AIS_Simulator_TCP_Server_App.csprojAssemblyReference.cache
