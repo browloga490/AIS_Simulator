@@ -46,7 +46,7 @@ namespace AIS_Simulator_TCP_Client_App
         private void BtnConnect_Click(object sender, EventArgs e)
         {
             client.Connect(txtHost.Text, Convert.ToInt32(txtPort.Text));
-            client.WriteLineAndGetReply("CLIENT: Verifying Connection\n" TimeSpan.FromSeconds(3));
+            client.WriteLineAndGetReply("CLIENT: Verifying Connection\n", TimeSpan.FromSeconds(3));
             txtRecievedData.Text += "Connected Successfully\n";
         }
     }

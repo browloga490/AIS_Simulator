@@ -14,10 +14,18 @@
         <TextBox x:Name="txtPort" HorizontalAlignment="Left" Height="23" Margin="277,46,0,0" TextWrapping="Wrap" Text="8910" VerticalAlignment="Top" Width="56" UndoLimit="106"/>
         <Button x:Name="btnStop" Content="Stop" HorizontalAlignment="Left" Margin="451,46,0,0" VerticalAlignment="Top" Width="75" Click="BtnStop_Click" Height="20"/>
         <TextBox x:Name="txtStatus" HorizontalAlignment="Left" Height="155" Margin="61,288,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="477" VerticalScrollBarVisibility="Auto"/>
-        <ListBox x:Name="lbxShipList" HorizontalAlignment="Left" Height="135" Margin="61,112,0,0" VerticalAlignment="Top" Width="235">
-            <ListBoxItem Content="Ship_1 ----- OFF"/>
+        <ListBox x:Name="lbxShipList" DataContext="viewModel" HorizontalAlignment="Left" Height="135" Margin="61,112,0,0" VerticalAlignment="Top" Width="235">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding vesselName}" Width="150"/>
+                        <TextBlock Text="Status : "/>
+                        <TextBlock Text="{Binding broadcastStatus}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListBox>
-        <Button x:Name="btnStartBrodcasting" Content="Start Brodcasting" HorizontalAlignment="Left" Margin="342,121,0,0" VerticalAlignment="Top" Width="104" Click="Button_Click"/>
+        <Button x:Name="btnStartBrodcasting" Content="Start Brodcasting" HorizontalAlignment="Left" Margin="342,121,0,0" VerticalAlignment="Top" Width="104"/>
         <Button x:Name="btnStopBrodasting" Content="Stop Brodcasting" HorizontalAlignment="Left" Margin="342,146,0,0" VerticalAlignment="Top" Width="104"/>
         <Button x:Name="btnAddShip" Content="Add New Ship" HorizontalAlignment="Left" Margin="342,172,0,0" VerticalAlignment="Top" Width="104"/>
         <Button x:Name="btnEditShip" Content="Edit Ship" HorizontalAlignment="Left" Margin="342,196,0,0" VerticalAlignment="Top" Width="104"/>

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using GalaSoft.MvvmLight;
 using SimpleTCP;
 
 namespace AIS_Simulator_TCP_Server_App
@@ -23,7 +24,14 @@ namespace AIS_Simulator_TCP_Server_App
     {
         public MainWindow()
         {
+            var viewModel = new ViewModel();
+
+            viewModel.ShipList.Add(new Ship() { vesselName = "Ship_1", broadcastStatus = "OFF" });
+
+            DataContext = viewModel;
             InitializeComponent();
+
+            lbxShipList.ItemsSource = viewModel.ShipList;
         }
 
         SimpleTcpServer server;
@@ -78,5 +86,35 @@ namespace AIS_Simulator_TCP_Server_App
             }
                 
         }
+    }
+
+    public class ViewModel : ViewModelBase
+    {
+        private List<Ship> _shipList;
+        public List<Ship> ShipList
+        {
+            get => _shipList;
+            set => Set(ref _shipList, value);
+        }
+
+        public string _serverLog;
+        public string ServerLog
+        {
+            get => _serverLog;
+            set => Set(ref _serverLog, value);
+        }
+
+        public ViewModel()
+        {
+            this.ShipList = new List<Ship>();
+            this.ServerLog = "";
+        }
+    }
+
+    public class Ship
+    {
+    public string vesselName { get; set; }
+    public string broadcastStatus { get; set; }
+
     }
 }
