@@ -5,9 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AIS_Simulator_TCP_Server_App"
         xmlns:uc="clr-namespace:AIS_Simulator_TCP_Server_App.UserControls"
+        xmlns:local1="clr-namespace:AIS_Simulator_TCP_Server_App.Resource_Dictionaries"
         mc:Ignorable="d"
         Title="AIS Simulator TCP Server" Height="496.5" Width="634">
+    <Window.Resources>
+        <local1:ViewModel x:Key="viewModel"/>
+    </Window.Resources>
     <Grid x:Name="Server">
-        <uc:UserControlMainWindow/>
+        <uc:UserControlMainWindow DataContext="{Binding Source={StaticResource viewModel}}"/>
     </Grid>
 </Window>

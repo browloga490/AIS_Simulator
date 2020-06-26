@@ -73,7 +73,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Resource_Dictionaries\ObjectReferences.cs" />
+    <Compile Include="Resource_Dictionaries\ViewModel.cs" />
     <Compile Include="UserControls\UserControlMainWindow.xaml.cs">
       <DependentUpon>UserControlMainWindow.xaml</DependentUpon>
     </Compile>

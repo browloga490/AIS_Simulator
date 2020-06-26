@@ -7,10 +7,6 @@ using System.Threading.Tasks;
 
 namespace AIS_Simulator_TCP_Server_App.Resource_Dictionaries
 {
-    class ObjectReferences
-    {
-    }
-
     public class ViewModel : ViewModelBase
     {
         private List<Ship> _shipList;
