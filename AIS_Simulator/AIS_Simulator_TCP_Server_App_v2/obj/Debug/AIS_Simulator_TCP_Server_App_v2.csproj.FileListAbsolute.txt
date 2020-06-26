@@ -17,3 +17,6 @@ C:\Users\Normandy SR-2\Documents\MC-CM_COOP_Project_Files\AIS_Simulator\AIS_Simu
 C:\Users\Normandy SR-2\Documents\MC-CM_COOP_Project_Files\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v2\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\Normandy SR-2\Documents\MC-CM_COOP_Project_Files\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v2\obj\Debug\View\UCConfigureShip.baml
 C:\Users\Normandy SR-2\Documents\MC-CM_COOP_Project_Files\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v2\obj\Debug\View\UCMain.baml
+C:\Users\Normandy SR-2\Documents\MC-CM_COOP_Project_Files\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v2\obj\Debug\AIS_Simulator_TCP_Server_App_v2.csprojAssemblyReference.cache
+C:\Users\Normandy SR-2\Documents\MC-CM_COOP_Project_Files\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v2\obj\Debug\View\UCPositionReport.g.cs
+C:\Users\Normandy SR-2\Documents\MC-CM_COOP_Project_Files\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v2\obj\Debug\View\UCPositionReport.baml

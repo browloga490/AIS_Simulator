@@ -62,6 +62,9 @@
     <Compile Include="View\UCMain.xaml.cs">
       <DependentUpon>UCMain.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\UCPositionReport.xaml.cs">
+      <DependentUpon>UCPositionReport.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -79,6 +82,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\UCMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UCPositionReport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -3,10 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:uc="clr-namespace:AIS_Simulator_TCP_Server_App_v2.View"
              xmlns:local="clr-namespace:AIS_Simulator_TCP_Server_App_v2.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="496.5" Width="634">
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="54" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Menu Name="Menu" Grid.Row="0"  Height="54" Width="634" BorderThickness="3">
+            <MenuItem x:Name="PosRepMenuItem" Header="Position Report Class A" Height="44" FontWeight="Bold" BorderThickness="2"/>
+            <Separator />
+            <MenuItem x:Name="StatVoyDataMenuItem" Header="Static and Voyage Related Data" Height="44" FontWeight="Bold" BorderThickness="2"/>
+            <Separator />
+            <MenuItem x:Name="ShipMotionMenuItem" Header="Ship Motion" Height="44" FontWeight="Bold" BorderThickness="2"/>
+        </Menu>
+
+        <uc:UCPositionReport Grid.Row="1"/>
+
     </Grid>
 </UserControl>
