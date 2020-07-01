@@ -28,17 +28,13 @@ namespace AIS_Simulator_TCP_Server_App_v2.View
         private static bool serverON;
         private static List<TcpClient> clientList;
 
-        CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
+        private CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
 
         public UCMain()
         {
             InitializeComponent();
 
             serverON = false;
-        }
-
-        private void BtnConfigueShip_Click(object sender, RoutedEventArgs e)
-        {
         }
 
         private void BtnStart_Click(object sender, RoutedEventArgs e)

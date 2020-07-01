@@ -12,12 +12,10 @@
             <RowDefinition Height="54" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Menu Name="Menu" Grid.Row="0"  Height="54" Width="634" BorderThickness="3">
-            <MenuItem x:Name="PosRepMenuItem" Header="Position Report Class A" Height="44" FontWeight="Bold" BorderThickness="2"/>
-            <Separator />
-            <MenuItem x:Name="StatVoyDataMenuItem" Header="Static and Voyage Related Data" Height="44" FontWeight="Bold" BorderThickness="2"/>
-            <Separator />
-            <MenuItem x:Name="ShipMotionMenuItem" Header="Ship Motion" Height="44" FontWeight="Bold" BorderThickness="2"/>
+        <Menu Name="Menu" Grid.Row="0"  Height="54" Width="634">
+            <MenuItem x:Name="PosRepMenuItem" Header="Position Report Class A" Height="54" FontWeight="Bold" BorderThickness="2" BorderBrush="Black"/>
+            <MenuItem x:Name="StatVoyDataMenuItem" Header="Static and Voyage Related Data" Height="54" FontWeight="Bold" BorderThickness="2" BorderBrush="Black"/>
+            <MenuItem x:Name="ShipMotionMenuItem" Header="Ship Motion" Height="54" FontWeight="Bold" BorderThickness="2" BorderBrush="Black"/>
         </Menu>
 
         <uc:UCPositionReport Grid.Row="1"/>

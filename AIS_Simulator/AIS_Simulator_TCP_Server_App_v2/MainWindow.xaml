@@ -8,6 +8,80 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="496.5" Width="634">
     <Grid>
-        <uc:UCMain/>
+        <Grid x:Name="MainView" Visibility="Hidden">
+            <Label x:Name="lblHost" Content="Host" HorizontalAlignment="Left" Margin="61,43,0,0" VerticalAlignment="Top" Height="26" Width="35"/>
+            <Button x:Name="btnStart" Content="Start" HorizontalAlignment="Left" Margin="371,46,0,0" VerticalAlignment="Top" Width="75" Height="20" Click="BtnStart_Click"/>
+            <TextBox x:Name="txtHost" HorizontalAlignment="Left" Height="23" Margin="102,46,0,0" TextWrapping="Wrap" Text="127.0.0.1" VerticalAlignment="Top" Width="120" UndoLimit="106"/>
+            <Label x:Name="lblPort" Content="Port" HorizontalAlignment="Left" Margin="237,43,0,0" VerticalAlignment="Top" Height="26" Width="31"/>
+            <TextBox x:Name="txtPort" HorizontalAlignment="Left" Height="23" Margin="277,46,0,0" TextWrapping="Wrap" Text="8910" VerticalAlignment="Top" Width="56" UndoLimit="106"/>
+            <Button x:Name="btnStop" Content="Stop" HorizontalAlignment="Left" Margin="451,46,0,0" VerticalAlignment="Top" Width="75" Height="20" Click="BtnStop_Click"/>
+            <TextBox x:Name="txtStatus" HorizontalAlignment="Left" Height="155" Margin="61,288,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="477" VerticalScrollBarVisibility="Auto"/>
+            <ListView x:Name="lvShipList" HorizontalAlignment="Left" Height="135" Margin="61,112,0,0" VerticalAlignment="Top" Width="235" ItemsSource="{Binding ShipList}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding StatVoyData.vesselName, Mode=TwoWay}" Width="150"/>
+                            <TextBlock Text="Status : "/>
+                            <TextBlock Text="{Binding BroadcastStatus, Mode=TwoWay}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button x:Name="btnStartBrodcasting" Content="Start Brodcasting" HorizontalAlignment="Left" Margin="342,121,0,0" VerticalAlignment="Top" Width="104"/>
+            <Button x:Name="btnStopBrodasting" Content="Stop Brodcasting" HorizontalAlignment="Left" Margin="342,146,0,0" VerticalAlignment="Top" Width="104"/>
+            <Button x:Name="btnConfigueShip" Content="Configure Ship" HorizontalAlignment="Left" Margin="342,196,0,0" VerticalAlignment="Top" Width="104" Click="BtnConfigueShip_Click"/>
+            <Button x:Name="btnRemoveShip" Content="Remove Ship" HorizontalAlignment="Left" Margin="342,220,0,0" VerticalAlignment="Top" Width="104"/>
+            <Label x:Name="lblShipList" Content="Ships" HorizontalAlignment="Left" Margin="61,86,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="lblServerLog" Content="Server Log" HorizontalAlignment="Left" Margin="61,262,0,0" VerticalAlignment="Top"/>
+        </Grid>
+        <Grid x:Name="ConfigureView">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="54" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="45" />
+            </Grid.RowDefinitions>
+            <Menu Name="Menu" Grid.Row="0"  Height="54" Width="634">
+                <MenuItem x:Name="PosRepMenuItem" Header="Position Report Class A" Height="54" FontWeight="Bold" BorderThickness="2" BorderBrush="Black" Click="PosRepMenuItem_Click"/>
+                <MenuItem x:Name="StatVoyDataMenuItem" Header="Static and Voyage Related Data" Height="54" FontWeight="Bold" BorderThickness="2" BorderBrush="Black" Click="StatVoyDataMenuItem_Click"/>
+                <MenuItem x:Name="ShipMotionMenuItem" Header="Ship Motion" Height="54" FontWeight="Bold" BorderThickness="2" BorderBrush="Black"/>
+            </Menu>
+            <ScrollViewer x:Name="svPosRep" Grid.Row="1" Visibility="Hidden">
+                <Grid >
+                    <ComboBox Name="cbxMessageType"  Margin="176,39,76,345"
+                              SelectedValue="{Binding ElementName=lvShipList, Path=SelectedItem.PosRepClassA.messageType}"
+                              ItemsSource="{Binding MessageTypePosRepList, Mode=OneTime}"
+                              SelectedValuePath="Key"
+                              DisplayMemberPath="Value"/>
+                    <Label Content="Message Type:" Margin="57,39,448,345" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                    <Label Content="MMSI:" Margin="57,95,448,287" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                    <Label Content="Longitude:" Margin="57,155,448,227" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                    <Label Content="Latitude:" Margin="57,215,448,167" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                    <Label Content="Timestamp:" Margin="57,276,448,106" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
+                    <TextBox Name="txtMMSI1" Text="{Binding ElementName=lvShipList, Path=SelectedItem.PosRepClassA.mmsi}" Height="30" Margin="176,95,282,287"/>
+                    <TextBox Name="txtLongitude" Text="{Binding ElementName=lvShipList, Path=SelectedItem.PosRepClassA.longitude}" Height="30" Margin="176,155,282,227"/>
+                    <TextBox Name="txtLatitude" Text="{Binding ElementName=lvShipList, Path=SelectedItem.PosRepClassA.latitude}" Height="30" Margin="176,215,282,167"/>
+                    <TextBox Name="txtTimestamp" Text="{Binding ElementName=lvShipList, Path=SelectedItem.PosRepClassA.timestamp}" Height="30" Margin="176,276,282,106"/>
+                </Grid>
+            </ScrollViewer>
+            <ScrollViewer Name="svStatVoyData"  Grid.Row="1">
+                <Grid >
+                    <Label Content="Vessel Name:" Margin="57,37,448,345" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                    <Label Content="Call Sign:" Margin="57,95,448,287" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                    <Label Content="MMSI:" Margin="57,154,448,228" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                    <Label Content="AIS Version:" Margin="57,213,448,169" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                    <Label Content="IMO:" Margin="57,276,448,106" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>
+
+                    <TextBox Name="txtVesselName" Text="{Binding ElementName=lvShipList, Path=SelectedItem.StatVoyData.vesselName}" Height="30" Margin="176,37,282,345" CharacterCasing="Upper"/>
+                    <TextBox Name="txtCallSign" Text="{Binding ElementName=lvShipList, Path=SelectedItem.StatVoyData.callSign}" Height="30" Margin="176,95,282,287" CharacterCasing="Upper"/>
+                    <TextBox Name="txtMMSI" Text="{Binding ElementName=lvShipList, Path=SelectedItem.StatVoyData.mmsi}" Height="30" Margin="176,154,282,228" CharacterCasing="Upper"/>
+                    <TextBox Name="txtAISVersion" Text="{Binding ElementName=lvShipList, Path=SelectedItem.StatVoyData.aisVersion}" Height="30" Margin="176,213,282,169" CharacterCasing="Upper"/>
+                    <TextBox Name="txtIMO" Text="{Binding ElementName=lvShipList, Path=SelectedItem.StatVoyData.imo}" Height="30" Margin="176,276,282,106" CharacterCasing="Upper"/>
+                </Grid>
+            </ScrollViewer>
+            <Grid Grid.Row="2">
+                <Button Name="btnClose" Grid.Column="1" Content="Save And Close" FontWeight="Bold" FontSize="18" Click="BtnClose_Click"/>
+            </Grid>
+
+        </Grid>
     </Grid>
 </Window>

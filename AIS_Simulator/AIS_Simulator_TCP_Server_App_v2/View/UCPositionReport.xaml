@@ -7,6 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="440" d:DesignWidth="634" Background="Gray">
     <Grid>
-        
+        <TextBox Name="TestText" Text=""  Margin="45,81,467,329"/>
     </Grid>
 </UserControl>
