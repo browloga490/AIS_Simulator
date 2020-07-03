@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\TCPServerModel.cs" />
     <Compile Include="ViewModel\ShipViewModel.cs" />
     <Compile Include="View\UCConfigureShip.xaml.cs">
       <DependentUpon>UCConfigureShip.xaml</DependentUpon>

@@ -9,23 +9,10 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
 {
     class ShipModel : INotifyPropertyChanged
     {
-        //private string _vesselName;
-        public string VesselName
-        {
-            get => this.StatVoyData.vesselName;
-
-            set
-            {
-                this.StatVoyData.vesselName = value;
-                OnPropertyChanged("VesselName");
-            }
-        }
-
         private string _broadcastStatus;
         public string BroadcastStatus
         {
             get => _broadcastStatus;
-
             set
             {
                 _broadcastStatus = value;
@@ -37,7 +24,6 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
         public PositionReportClassA PosRepClassA
         {
             get => _posRepClassA;
-
             set
             {
                 _posRepClassA = value;
@@ -45,7 +31,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
                 //Console.WriteLine("Binary Conversion: '?' = {0}", _posRepClassA.convertStringToBinary("?"));
                 //Console.WriteLine("Generated Payload: {0}", _posRepClassA.generateSentence());
 
-                Console.WriteLine("Convert '170.1345' to binary: {0}", Convert.ToString(long.Parse("1345.01"), 2));
+                //Console.WriteLine("Convert '170.1345' to binary: {0}", Convert.ToString(long.Parse("1345.01"), 2));
 
                 OnPropertyChanged("PosRepClassA");
             }
@@ -55,7 +41,6 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
         public StaticAndVoyageRelatedData StatVoyData
         {
             get => _statVoyData;
-
             set
             {
                 _statVoyData = value;
@@ -67,7 +52,6 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
         public bool IsNewShip
         {
             get => _isNewShip;
-
             set
             {
                 _isNewShip = value;
@@ -75,12 +59,13 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             }
         }
 
-        public ShipModel(string name)
+        public ShipModel()
         {
             this.PosRepClassA = new PositionReportClassA();
             this.StatVoyData = new StaticAndVoyageRelatedData();
-            this.StatVoyData.vesselName = name;
+            this.StatVoyData.vesselName = "[ADD NEW SHIP]";
             this._broadcastStatus = "OFF";
+            this.IsNewShip = true;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -113,6 +98,9 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
         public string radio { get; set; }
 
         public string[] binaryArray { get; set; }
+
+        public string sentence;
+        public int broadcastDelay;
 
         public PositionReportClassA()
         {
@@ -152,6 +140,9 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
                 "000",
                 "0",
                 "0000000000000000000"};
+
+            this.sentence = "!AIVDM,1,1,,A,13HOI:0P0000VOHLCnHQKwvL05Ip,0*23";
+            this.broadcastDelay = 4;
         }
 
         public string generateSentence()

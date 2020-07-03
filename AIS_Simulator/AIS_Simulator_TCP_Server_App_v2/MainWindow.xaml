@@ -8,15 +8,15 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="496.5" Width="634">
     <Grid>
-        <Grid x:Name="MainView" Visibility="Hidden">
+        <Grid x:Name="MainView">
             <Label x:Name="lblHost" Content="Host" HorizontalAlignment="Left" Margin="61,43,0,0" VerticalAlignment="Top" Height="26" Width="35"/>
             <Button x:Name="btnStart" Content="Start" HorizontalAlignment="Left" Margin="371,46,0,0" VerticalAlignment="Top" Width="75" Height="20" Click="BtnStart_Click"/>
-            <TextBox x:Name="txtHost" HorizontalAlignment="Left" Height="23" Margin="102,46,0,0" TextWrapping="Wrap" Text="127.0.0.1" VerticalAlignment="Top" Width="120" UndoLimit="106"/>
+            <TextBox x:Name="txtHost" HorizontalAlignment="Left" Height="23" Margin="102,46,0,0" TextWrapping="Wrap" Text="{Binding Server.ServerHost, Mode=TwoWay}" VerticalAlignment="Top" Width="120" UndoLimit="106"/>
             <Label x:Name="lblPort" Content="Port" HorizontalAlignment="Left" Margin="237,43,0,0" VerticalAlignment="Top" Height="26" Width="31"/>
-            <TextBox x:Name="txtPort" HorizontalAlignment="Left" Height="23" Margin="277,46,0,0" TextWrapping="Wrap" Text="8910" VerticalAlignment="Top" Width="56" UndoLimit="106"/>
+            <TextBox x:Name="txtPort" HorizontalAlignment="Left" Height="23" Margin="277,46,0,0" TextWrapping="Wrap" Text="{Binding Server.ServerPort, Mode=TwoWay}" VerticalAlignment="Top" Width="56" UndoLimit="106"/>
             <Button x:Name="btnStop" Content="Stop" HorizontalAlignment="Left" Margin="451,46,0,0" VerticalAlignment="Top" Width="75" Height="20" Click="BtnStop_Click"/>
-            <TextBox x:Name="txtStatus" HorizontalAlignment="Left" Height="155" Margin="61,288,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="477" VerticalScrollBarVisibility="Auto"/>
-            <ListView x:Name="lvShipList" HorizontalAlignment="Left" Height="135" Margin="61,112,0,0" VerticalAlignment="Top" Width="235" ItemsSource="{Binding ShipList}">
+            <TextBox x:Name="txtStatus" Text="{Binding Server.ServerStatus}" HorizontalAlignment="Left" Height="155" Margin="61,288,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="477" VerticalScrollBarVisibility="Auto"/>
+            <ListView x:Name="lvShipList" HorizontalAlignment="Left" Height="135" Margin="61,112,0,0" VerticalAlignment="Top" Width="235" ItemsSource="{Binding ShipList}" SelectedItem="{Binding SelectedShip}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -27,14 +27,14 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button x:Name="btnStartBrodcasting" Content="Start Brodcasting" HorizontalAlignment="Left" Margin="342,121,0,0" VerticalAlignment="Top" Width="104"/>
-            <Button x:Name="btnStopBrodasting" Content="Stop Brodcasting" HorizontalAlignment="Left" Margin="342,146,0,0" VerticalAlignment="Top" Width="104"/>
+            <Button x:Name="btnStartBrodcasting" Content="Start Brodcasting" HorizontalAlignment="Left" Margin="342,121,0,0" VerticalAlignment="Top" Width="104" Click="btnStartBrodcasting_Click"/>
+            <Button x:Name="btnStopBrodasting" Content="Stop Brodcasting" HorizontalAlignment="Left" Margin="342,146,0,0" VerticalAlignment="Top" Width="104" Click="btnStopBrodasting_Click"/>
             <Button x:Name="btnConfigueShip" Content="Configure Ship" HorizontalAlignment="Left" Margin="342,196,0,0" VerticalAlignment="Top" Width="104" Click="BtnConfigueShip_Click"/>
-            <Button x:Name="btnRemoveShip" Content="Remove Ship" HorizontalAlignment="Left" Margin="342,220,0,0" VerticalAlignment="Top" Width="104"/>
+            <Button x:Name="btnRemoveShip" Content="Remove Ship" HorizontalAlignment="Left" Margin="342,220,0,0" VerticalAlignment="Top" Width="104" Click="btnRemoveShip_Click"/>
             <Label x:Name="lblShipList" Content="Ships" HorizontalAlignment="Left" Margin="61,86,0,0" VerticalAlignment="Top"/>
             <Label x:Name="lblServerLog" Content="Server Log" HorizontalAlignment="Left" Margin="61,262,0,0" VerticalAlignment="Top"/>
         </Grid>
-        <Grid x:Name="ConfigureView">
+        <Grid x:Name="ConfigureView" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="54" />
                 <RowDefinition Height="*" />

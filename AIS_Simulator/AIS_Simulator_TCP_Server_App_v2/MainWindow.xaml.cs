@@ -53,6 +53,7 @@ namespace AIS_Simulator_TCP_Server_App_v2
 
         private void BtnStart_Click(object sender, RoutedEventArgs e)
         {
+            /*
             if (!serverON)
             {
                 clientList = new List<TcpClient>();
@@ -85,10 +86,15 @@ namespace AIS_Simulator_TCP_Server_App_v2
                 }, cancelTokenSource.Token);
 
             }
+            */
+
+            VM.startTCPServer();
+            txtStatus.ScrollToEnd();
         }
 
         private void BtnStop_Click(object sender, RoutedEventArgs e)
         {
+            /*
             if (serverON)
             {
                 txtStatus.Text += "Server stopping...\n";
@@ -101,6 +107,10 @@ namespace AIS_Simulator_TCP_Server_App_v2
                 txtStatus.Text += "Server OFF\n";
                 txtStatus.ScrollToEnd();
             }
+            */
+
+            VM.stopTCPServer();
+            txtStatus.ScrollToEnd();
         }
 
         private static byte[] ReadToEnd(NetworkStream stream)
@@ -153,5 +163,19 @@ namespace AIS_Simulator_TCP_Server_App_v2
             svPosRep.Visibility = Visibility.Visible;
         }
 
+        private void btnStartBrodcasting_Click(object sender, RoutedEventArgs e)
+        {
+            VM.startBroadcast();
+        }
+
+        private void btnStopBrodasting_Click(object sender, RoutedEventArgs e)
+        {
+            VM.stopBroadcast();
+        }
+
+        private void btnRemoveShip_Click(object sender, RoutedEventArgs e)
+        {
+            VM.removeShip();
+        }
     }
 }
