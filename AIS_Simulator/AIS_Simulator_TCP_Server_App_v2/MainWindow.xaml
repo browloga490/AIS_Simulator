@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="496.5" Width="634">
     <Grid>
-        <Grid x:Name="MainView">
+        <Grid x:Name="MainView" Visibility="Hidden">
             <Label x:Name="lblHost" Content="Host" HorizontalAlignment="Left" Margin="61,43,0,0" VerticalAlignment="Top" Height="26" Width="35"/>
             <Button x:Name="btnStart" Content="Start" HorizontalAlignment="Left" Margin="371,46,0,0" VerticalAlignment="Top" Width="75" Height="20" Click="BtnStart_Click"/>
             <TextBox x:Name="txtHost" HorizontalAlignment="Left" Height="23" Margin="102,46,0,0" TextWrapping="Wrap" Text="{Binding Server.ServerHost, Mode=TwoWay}" VerticalAlignment="Top" Width="120" UndoLimit="106"/>
@@ -34,7 +34,7 @@
             <Label x:Name="lblShipList" Content="Ships" HorizontalAlignment="Left" Margin="61,86,0,0" VerticalAlignment="Top"/>
             <Label x:Name="lblServerLog" Content="Server Log" HorizontalAlignment="Left" Margin="61,262,0,0" VerticalAlignment="Top"/>
         </Grid>
-        <Grid x:Name="ConfigureView" Visibility="Hidden">
+        <Grid x:Name="ConfigureView" Visibility="Visible">
             <Grid.RowDefinitions>
                 <RowDefinition Height="54" />
                 <RowDefinition Height="*" />
@@ -45,10 +45,10 @@
                 <MenuItem x:Name="StatVoyDataMenuItem" Header="Static and Voyage Related Data" Height="54" FontWeight="Bold" BorderThickness="2" BorderBrush="Black" Click="StatVoyDataMenuItem_Click"/>
                 <MenuItem x:Name="ShipMotionMenuItem" Header="Ship Motion" Height="54" FontWeight="Bold" BorderThickness="2" BorderBrush="Black"/>
             </Menu>
-            <ScrollViewer x:Name="svPosRep" Grid.Row="1" Visibility="Hidden">
+            <ScrollViewer x:Name="svPosRep" Grid.Row="1" Visibility="Visible">
                 <Grid >
                     <ComboBox Name="cbxMessageType"  Margin="176,39,76,345"
-                              SelectedValue="{Binding ElementName=lvShipList, Path=SelectedItem.PosRepClassA.messageType}"
+                              SelectedValue="{Binding ElementName=lvShipList, Path=SelectedItem.PosRepClassA.messageType, Mode=TwoWay}"
                               ItemsSource="{Binding MessageTypePosRepList, Mode=OneTime}"
                               SelectedValuePath="Key"
                               DisplayMemberPath="Value"/>
@@ -57,13 +57,13 @@
                     <Label Content="Longitude:" Margin="57,155,448,227" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
                     <Label Content="Latitude:" Margin="57,215,448,167" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
                     <Label Content="Timestamp:" Margin="57,276,448,106" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
-                    <TextBox Name="txtMMSI1" Text="{Binding ElementName=lvShipList, Path=SelectedItem.PosRepClassA.mmsi}" Height="30" Margin="176,95,282,287"/>
+                    <TextBox Name="txtMMSI1" Text="{Binding ElementName=lvShipList, Path=SelectedItem.PosRepClassA.MMSI}" Height="30" Margin="176,95,282,287"/>
                     <TextBox Name="txtLongitude" Text="{Binding ElementName=lvShipList, Path=SelectedItem.PosRepClassA.longitude}" Height="30" Margin="176,155,282,227"/>
                     <TextBox Name="txtLatitude" Text="{Binding ElementName=lvShipList, Path=SelectedItem.PosRepClassA.latitude}" Height="30" Margin="176,215,282,167"/>
                     <TextBox Name="txtTimestamp" Text="{Binding ElementName=lvShipList, Path=SelectedItem.PosRepClassA.timestamp}" Height="30" Margin="176,276,282,106"/>
                 </Grid>
             </ScrollViewer>
-            <ScrollViewer Name="svStatVoyData"  Grid.Row="1">
+            <ScrollViewer Name="svStatVoyData"  Grid.Row="1" Visibility="Hidden">
                 <Grid >
                     <Label Content="Vessel Name:" Margin="57,37,448,345" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>
                     <Label Content="Call Sign:" Margin="57,95,448,287" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>

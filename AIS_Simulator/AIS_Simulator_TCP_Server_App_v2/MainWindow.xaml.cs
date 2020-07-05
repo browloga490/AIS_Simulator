@@ -46,9 +46,11 @@ namespace AIS_Simulator_TCP_Server_App_v2
             
             String integralNum = num.Substring(0, num.IndexOf('.'));
             String fractionalNum = num.Substring(num.IndexOf('.') + 1, num.Length - (num.IndexOf('.') + 1));
-            float flt = float.Parse("0");
+            int intnum = (int) (float.Parse("120.2345") * 60000);
+            string finalNum = Convert.ToString(intnum, 2);
 
-            //Console.WriteLine(flt);
+            Console.WriteLine("TEST :: {0}",finalNum);
+            Console.WriteLine("LENGTH :: {0}", finalNum.Length);
         }
 
         private void BtnStart_Click(object sender, RoutedEventArgs e)

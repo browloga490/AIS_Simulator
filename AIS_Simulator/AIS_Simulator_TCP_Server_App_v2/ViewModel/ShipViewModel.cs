@@ -113,12 +113,17 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
 
         public void saveConfiguration(string shipName)
         {
-            SelectedShip.IsNewShip = false;
-
-            if (!(ShipList[ShipList.Count-1].StatVoyData.vesselName.Equals("[ADD NEW SHIP]")))
+            if (!shipName.Equals("[ADD NEW SHIP]"))
             {
-                ShipList.Add(new ShipModel());
-            }
+                SelectedShip.IsNewShip = false;
+
+                Console.WriteLine("MMSI VALUE IS :: {0}", SelectedShip.PosRepClassA.MMSI);
+
+                if (!(ShipList[ShipList.Count - 1].StatVoyData.vesselName.Equals("[ADD NEW SHIP]")))
+                {
+                    ShipList.Add(new ShipModel());
+                }
+            } 
         }
 
         public void removeShip()
@@ -149,7 +154,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
 
             Task.Run(() =>
             {
-                if (tempShip.BroadcastStatus.Equals("OFF"))
+                if (tempShip.BroadcastStatus.Equals("OFF") && !tempShip.IsNewShip && Server.ServerOn)
                 {
                     tempShip.BroadcastStatus = "ON";
 
