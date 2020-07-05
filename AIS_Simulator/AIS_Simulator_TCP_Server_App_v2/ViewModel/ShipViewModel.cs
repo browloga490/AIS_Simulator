@@ -117,7 +117,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
             {
                 SelectedShip.IsNewShip = false;
 
-                Console.WriteLine("MMSI VALUE IS :: {0}", SelectedShip.PosRepClassA.MMSI);
+                //Console.WriteLine("MMSI VALUE IS :: {0}", SelectedShip.PosRepClassA.MMSI);
 
                 if (!(ShipList[ShipList.Count - 1].StatVoyData.vesselName.Equals("[ADD NEW SHIP]")))
                 {
