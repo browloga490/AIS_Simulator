@@ -12,7 +12,7 @@
         <TextBox x:Name="txtHost" HorizontalAlignment="Left" Height="23" Margin="121,32,0,0" TextWrapping="Wrap" Text="127.0.0.1" VerticalAlignment="Top" Width="120" UndoLimit="106"/>
         <Label x:Name="lblPort" Content="Port" HorizontalAlignment="Left" Margin="256,29,0,0" VerticalAlignment="Top" Height="26" Width="31"/>
         <TextBox x:Name="txtPort" HorizontalAlignment="Left" Height="23" Margin="296,32,0,0" TextWrapping="Wrap" Text="8910" VerticalAlignment="Top" Width="56" UndoLimit="106"/>
-        <TextBox x:Name="txtRecievedData" HorizontalAlignment="Left" Height="144" Margin="80,87,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="374"/>
+        <TextBox x:Name="txtRecievedData" HorizontalAlignment="Left" Height="144" Margin="80,87,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="374" Text="{Binding dataBox}"/>
 
     </Grid>
 </Window>

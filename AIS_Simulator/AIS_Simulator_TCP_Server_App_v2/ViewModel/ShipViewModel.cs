@@ -85,10 +85,11 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
                     {
                         try
                         {
-                            TcpClient client = Server.Listener.AcceptTcpClient(); //Waits for a client conection request
-
+                            //Waits for a client conection request
+                            TcpClient client = Server.Listener.AcceptTcpClient();
                             NetworkStream stream = client.GetStream();
 
+                            //Adds client to the server's list of clients once a conncetion is established
                             Server.ClientList.Add(client);
                         }
                         catch (SocketException socExp) { }
@@ -147,41 +148,34 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
 
         public void startBroadcast ()
         {
-            //Ship's broadcasting value is set to true
-            //This code runs on a loop
-
             ShipModel tempShip = ShipList[ShipList.IndexOf(SelectedShip)];
 
-            Task.Run(() =>
+            if (tempShip.BroadcastStatus.Equals("OFF") && !tempShip.IsNewShip && Server.ServerOn)
             {
-                if (tempShip.BroadcastStatus.Equals("OFF") && !tempShip.IsNewShip && Server.ServerOn)
+                tempShip.BroadcastStatus = "ON";
+                Server.ServerStatus += String.Format("Ship {0} :: Broadcast ON\n", tempShip.StatVoyData.vesselName);
+
+                byte[] posRepMessage;
+                byte[] statVoyMessage;
+
+                //Add new tasks here to implement the other broadcasted sentences
+                Task.Run(() =>
                 {
-                    tempShip.BroadcastStatus = "ON";
-
-                    byte[] message = new byte[1024];
-
-                    foreach (char c in tempShip.PosRepClassA.sentence)
-                    {
-                        message.Append(Convert.ToByte(c));
-                    }
-
-                    Server.ServerStatus += String.Format("Ship {0} :: Broadcast ON\n", tempShip.StatVoyData.vesselName);
-
                     while (Server.ServerOn && tempShip.BroadcastStatus.Equals("ON"))
                     {
                         try
                         {
-                            
-                            Server.SendToClients(message);
-                            Server.ServerStatus += String.Format("Ship {0} :: Sent the message {1} to the clients\n", tempShip.StatVoyData.vesselName, tempShip.PosRepClassA.sentence);
-                            Thread.Sleep(tempShip.PosRepClassA.broadcastDelay*1000);
-
-                            //Add new tasks here to implement the other broadcasted sentences
+                            posRepMessage = Encoding.UTF8.GetBytes(tempShip.PosRepClassA.Sentence);
+                            Server.SendToClients(posRepMessage);
+                            Server.ServerStatus += String.Format("Ship {0} :: Sent the message {1} to the clients\n", tempShip.StatVoyData.vesselName, tempShip.PosRepClassA.Sentence);
+                            Thread.Sleep(tempShip.PosRepClassA.BroadcastDelay * 1000);
                         }
                         catch (SocketException socExp) { }
                     }
-                }
-            }, Server.CancelTokenSource.Token);
+                }, Server.CancelTokenSource.Token);
+                
+            }
+            
         }
 
         public void stopBroadcast()

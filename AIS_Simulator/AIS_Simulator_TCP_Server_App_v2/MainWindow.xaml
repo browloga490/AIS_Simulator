@@ -48,7 +48,7 @@
             <ScrollViewer x:Name="svPosRep" Grid.Row="1" Visibility="Visible">
                 <Grid >
                     <ComboBox Name="cbxMessageType"  Margin="176,39,76,345"
-                              SelectedValue="{Binding ElementName=lvShipList, Path=SelectedItem.PosRepClassA.messageType, Mode=TwoWay}"
+                              SelectedValue="{Binding ElementName=lvShipList, Path=SelectedItem.PosRepClassA.MessageType, Mode=TwoWay}"
                               ItemsSource="{Binding MessageTypePosRepList, Mode=OneTime}"
                               SelectedValuePath="Key"
                               DisplayMemberPath="Value"/>
@@ -58,9 +58,9 @@
                     <Label Content="Latitude:" Margin="57,215,448,167" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
                     <Label Content="Timestamp:" Margin="57,276,448,106" HorizontalContentAlignment="Right" VerticalContentAlignment="Center"/>
                     <TextBox Name="txtMMSI1" Text="{Binding ElementName=lvShipList, Path=SelectedItem.PosRepClassA.MMSI}" Height="30" Margin="176,95,282,287"/>
-                    <TextBox Name="txtLongitude" Text="{Binding ElementName=lvShipList, Path=SelectedItem.PosRepClassA.longitude}" Height="30" Margin="176,155,282,227"/>
-                    <TextBox Name="txtLatitude" Text="{Binding ElementName=lvShipList, Path=SelectedItem.PosRepClassA.latitude}" Height="30" Margin="176,215,282,167"/>
-                    <TextBox Name="txtTimestamp" Text="{Binding ElementName=lvShipList, Path=SelectedItem.PosRepClassA.timestamp}" Height="30" Margin="176,276,282,106"/>
+                    <TextBox Name="txtLongitude" Text="{Binding ElementName=lvShipList, Path=SelectedItem.PosRepClassA.Longitude}" Height="30" Margin="176,155,282,227"/>
+                    <TextBox Name="txtLatitude" Text="{Binding ElementName=lvShipList, Path=SelectedItem.PosRepClassA.Latitude}" Height="30" Margin="176,215,282,167"/>
+                    <TextBox Name="txtTimestamp" Text="{Binding ElementName=lvShipList, Path=SelectedItem.PosRepClassA.Timestamp}" Height="30" Margin="176,276,282,106"/>
                 </Grid>
             </ScrollViewer>
             <ScrollViewer Name="svStatVoyData"  Grid.Row="1" Visibility="Hidden">

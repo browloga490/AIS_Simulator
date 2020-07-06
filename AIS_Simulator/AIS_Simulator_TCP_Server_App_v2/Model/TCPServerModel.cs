@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -127,9 +128,23 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
 
         public void SendToClients(byte[] data)
         {
+            List<TcpClient> toBeRemoved = new List<TcpClient>();
+
             foreach (TcpClient client in ClientList)
             {
-                client.GetStream().Write(data, 0, data.Length);
+                try
+                {
+                    client.GetStream().Write(data, 0, data.Length);
+                }
+                catch (IOException e)
+                {
+                    toBeRemoved.Add(client);
+                }
+            }
+
+            foreach(TcpClient client in toBeRemoved)
+            {
+                ClientList.Remove(client);
             }
         }
     }
