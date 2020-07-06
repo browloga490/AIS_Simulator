@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Animation;
 
 namespace AIS_Simulator_TCP_Server_App_v2.Model
 {
@@ -60,7 +61,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
         {
             this.PosRepClassA = new PositionReportClassA();
             this.StatVoyData = new StaticAndVoyageRelatedData();
-            this.StatVoyData.vesselName = "[ADD NEW SHIP]";
+            this.StatVoyData.VesselName = "[ADD NEW SHIP]";
             this._broadcastStatus = "OFF";
             this.IsNewShip = true;
         }
@@ -528,11 +529,11 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             this.binaryArray[1] = convertIntegerToBinary(this.Repeat, 2);
             this.binaryArray[2] = convertIntegerToBinary(this.MMSI, 30);
             this.binaryArray[3] = convertIntegerToBinary(this.NavStatus, 4);
-            this.binaryArray[4] = convertIntegerToBinary((4.733*Math.Sqrt(double.Parse(this.Turn))).ToString(), 8, 1, true);
+            this.binaryArray[4] = convertIntegerToBinary((4.733*Math.Sqrt(double.Parse(this.Turn))).ToString(), 8, 1);
             this.binaryArray[5] = convertIntegerToBinary(this.Speed, 10);
             this.binaryArray[6] = convertIntegerToBinary(this.Accuracy, 1);
-            this.binaryArray[7] = convertIntegerToBinary(this.Longitude, 28, 60000);
-            this.binaryArray[8] = convertIntegerToBinary(this.Latitude, 27, 60000);
+            this.binaryArray[7] = convertIntegerToBinary(this.Longitude, 28, 600000);
+            this.binaryArray[8] = convertIntegerToBinary(this.Latitude, 27, 600000);
             this.binaryArray[9] = convertIntegerToBinary(this.Course, 12, 10);
             this.binaryArray[10] = convertIntegerToBinary(this.Heading, 9);
             this.binaryArray[11] = convertIntegerToBinary(this.Timestamp, 6);
@@ -595,7 +596,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             this.Sentence += "*" + this.CheckSum;
         }
 
-        public string convertIntegerToBinary(string num, int padding, int multiplier=1, bool signedInteger=false)
+        public string convertIntegerToBinary(string num, int padding, int multiplier=1)
         {
             ///Given a number in the form of a string (num), this method will
             ///return the binary representation of the number. If the number
@@ -604,21 +605,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             ///the integral and fractional parts seperately. These two values
             ///will them be combined and returned.
 
-            string signBit = "";
             string finalNum;
-
-            if (signedInteger)
-            {
-                if (num.Contains('-'))
-                {
-                    signBit = "1";
-                    num.Remove(0, 1);
-                }
-                else
-                    signBit = "0";
-
-                padding -= 1;
-            }
 
             if (num.Contains('.'))
             {
@@ -630,7 +617,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
                 finalNum = Convert.ToString(int.Parse(num)*multiplier, 2).PadLeft(padding, '0');
             }
 
-            return signBit + finalNum;
+            return finalNum;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -648,6 +635,8 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
     {
         public const string messageType = "5";
 
+        private bool initialized;
+
         private string _repeat;
         public string Repeat 
         {
@@ -656,77 +645,492 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             {
                 _repeat = value;
                 OnPropertyChanged("Repeat");
+                if (initialized)
+                {
+                    generateSentence();
+                }
             } 
         }
-        public string mmsi { get; set; }
-        public string aisVersion { get; set; }
-        public string imo { get; set; }
-        public string callSign { get; set; }
-        public string vesselName { get; set; }
-        public string shipType { get; set; }
-        public string dimensionToBow { get; set; }
-        public string dimensionToStern { get; set; }
-        public string dimensionToPort { get; set; }
-        public string dimensionToStarboard { get; set; }
-        public string epfd { get; set; }
-        public string month { get; set; }
-        public string day { get; set; }
-        public string hour { get; set; }
-        public string minute { get; set; }
-        public string draught { get; set; }
-        public string destination { get; set; }
-        public string dte { get; set; }
+
+        private string _mmsi;
+        public string MMSI 
+        { 
+            get => _mmsi; 
+            set
+            {
+                _mmsi = value;
+                OnPropertyChanged("MMSI");
+                if (initialized)
+                {
+                    generateSentence();
+                }
+            } 
+        }
+
+        private string _aisVersion;
+        public string AISVersion 
+        { 
+            get => _aisVersion;
+            set
+            {
+                _aisVersion = value;
+                OnPropertyChanged("AISVersion");
+                if (initialized)
+                {
+                    generateSentence();
+                }
+            } 
+        }
+
+        private string _imo;
+        public string IMO 
+        { 
+            get => _imo;
+            set
+            {
+                _imo = value;
+                OnPropertyChanged("IMO");
+                if (initialized)
+                {
+                    generateSentence();
+                }
+            } 
+        }
+
+        private string _callSign;
+        public string CallSign 
+        { 
+            get => _callSign;
+            set
+            {
+                _callSign = value;
+                OnPropertyChanged("CallSign");
+                if (initialized)
+                {
+                    generateSentence();
+                }
+            } 
+        }
+
+        private string _vesselName;
+        public string VesselName 
+        { 
+            get => _vesselName;
+            set
+            {
+                _vesselName = value;
+                OnPropertyChanged("VesselName");
+                if (initialized)
+                {
+                    generateSentence();
+                }
+            } 
+        }
+
+        private string _shipType;
+        public string ShipType 
+        { 
+            get => _shipType;
+            set
+            {
+                _shipType = value;
+                OnPropertyChanged("ShipType");
+                if (initialized)
+                {
+                    generateSentence();
+                }
+            } 
+        }
+
+        private string _dimensionToBow;
+        public string DimensionToBow 
+        { 
+            get => _dimensionToBow;
+            set
+            {
+                _dimensionToBow = value;
+                OnPropertyChanged("DimensionToBow");
+                if (initialized)
+                {
+                    generateSentence();
+                }
+            } 
+        }
+
+        private string _dimensionToStern;
+        public string DimensionToStern 
+        { 
+            get => _dimensionToStern;
+            set
+            {
+                _dimensionToStern = value;
+                OnPropertyChanged("DimensionToStern");
+                if (initialized)
+                {
+                    generateSentence();
+                }
+            }
+        }
+
+        private string _dimensionToPort;
+        public string DimensionToPort 
+        { 
+            get => _dimensionToPort; 
+            set
+            {
+                _dimensionToPort = value;
+                OnPropertyChanged("DimensionToPort");
+                if (initialized)
+                {
+                    generateSentence();
+                }
+            }
+        }
+
+        private string _dimensionToStarboard;
+        public string DimensionToStarboard 
+        { 
+            get => _dimensionToStarboard;
+            set
+            {
+                _dimensionToStarboard = value;
+                OnPropertyChanged("DimensionToStarboard");
+                if (initialized)
+                {
+                    generateSentence();
+                }
+            }
+        }
+
+        private string _epfd;
+        public string EPFD 
+        { 
+            get => _epfd; 
+            set
+            {
+                _epfd = value;
+                OnPropertyChanged("EPFD");
+                if (initialized)
+                {
+                    generateSentence();
+                }
+            }
+        }
+
+        private string _month;
+        public string Month 
+        { 
+            get => _month;
+            set
+            {
+                _month = value;
+                OnPropertyChanged("Month");
+                if (initialized)
+                {
+                    generateSentence();
+                }
+            } 
+        }
+
+        private string _day;
+        public string Day 
+        { 
+            get => _day; 
+            set
+            {
+                _day = value;
+                OnPropertyChanged("Day");
+                if (initialized)
+                {
+                    generateSentence();
+                }
+            }
+        }
+
+        private string _hour;
+        public string Hour 
+        { 
+            get => _hour;
+            set
+            {
+                _hour = value;
+                OnPropertyChanged("Hour");
+                if (initialized)
+                {
+                    generateSentence();
+                }
+            } 
+        }
+
+        private string _minute;
+        public string Minute 
+        { 
+            get => _minute;
+            set
+            {
+                _minute = value;
+                OnPropertyChanged("Minute");
+                if (initialized)
+                {
+                    generateSentence();
+                }
+            } 
+        }
+
+        private string _draught;
+        public string Draught 
+        { 
+            get => _draught; 
+            set
+            {
+                _draught = value;
+                OnPropertyChanged("Draught");
+                if (initialized)
+                {
+                    generateSentence();
+                }
+            }
+        }
+
+        private string _destination;
+        public string Destination 
+        { 
+            get => _destination;
+            set
+            {
+                _destination = value;
+                OnPropertyChanged("Destination");
+                if (initialized)
+                {
+                    generateSentence();
+                }
+            } 
+        }
+
+        private string _dte;
+        public string DTE 
+        { 
+            get => _dte;
+            set
+            {
+                _dte = value;
+                OnPropertyChanged("DTE");
+                if (initialized)
+                {
+                    generateSentence();
+                }
+            }
+        }
+
         public string spare { get; set; }
 
-        public string[] binaryArray { get; set; }
+        //General sentence values
+
+        private string _packetID;
+        public string PacketID
+        {
+            get => _packetID;
+            set
+            {
+                _packetID = value;
+                OnPropertyChanged("PacketID");
+                if (initialized)
+                {
+                    generateSentence();
+                }
+            }
+        }
+
+        private string _fragCount;
+        public string FragCount
+        {
+            get => _fragCount;
+            set
+            {
+                _fragCount = value;
+                OnPropertyChanged("FragCount");
+                if (initialized)
+                {
+                    generateSentence();
+                }
+            }
+        }
+
+        private string _fragNum;
+        public string FragNum
+        {
+            get => _fragNum;
+            set
+            {
+                _fragNum = value;
+                OnPropertyChanged("FragNum");
+                if (initialized)
+                {
+                    generateSentence();
+                }
+            }
+        }
+
+        private string _sequentialMessageID;
+        public string SequentialMessageID
+        {
+            get => _sequentialMessageID;
+            set
+            {
+                _sequentialMessageID = value;
+                OnPropertyChanged("SequentialMessageID");
+                if (initialized)
+                {
+                    generateSentence();
+                }
+            }
+        }
+
+        private string _radChanCode;
+        public string RadChanCode
+        {
+            get => _radChanCode;
+            set
+            {
+                _radChanCode = value;
+                OnPropertyChanged("RadChanCode");
+                if (initialized)
+                {
+                    generateSentence();
+                }
+            }
+        }
+
+        private string _payload;
+        public string Payload
+        {
+            get => _payload;
+            set
+            {
+                _payload = value;
+                OnPropertyChanged("Payload");
+            }
+        }
+
+        private string _fillBitNum;
+        public string FillBitNum
+        {
+            get => _fillBitNum;
+            set
+            {
+                _fillBitNum = value;
+                OnPropertyChanged("FillBitNum");
+                if (initialized)
+                {
+                    generateSentence();
+                }
+            }
+        }
+
+        private string _checkSum;
+        public string CheckSum
+        {
+            get => _checkSum;
+            set
+            {
+                _checkSum = value;
+                OnPropertyChanged("CheckSum");
+            }
+        }
 
         public StaticAndVoyageRelatedData()
         {
             //Initializing with default values
 
             this.Repeat = "0";
-            this.mmsi = "000000000"; //Can change
-            this.aisVersion = "0"; //Can change
-            this.imo = "000"; //Can change
-            this.callSign = "1234567"; //Can change
-            this.vesselName = "12345678901234567890"; //Can change
-            this.shipType = "99";
-            this.dimensionToBow = "0";
-            this.dimensionToStern = "0";
-            this.dimensionToPort = "0";
-            this.dimensionToStarboard = "0";
-            this.epfd = "0";
-            this.month = "0";
-            this.day = "0";
-            this.hour = "0";
-            this.minute = "0";
-            this.draught = "0";
-            this.destination = "12345678901234567890";
-            this.dte = "1";
+            this.MMSI = "000000000"; //Can change
+            this.AISVersion = "0"; //Can change
+            this.IMO = "000000000"; //Can change
+            this.CallSign = "abcd123"; //Can change
+            this.VesselName = "12345678901234567890"; //Can change
+            this.ShipType = "0";
+            this.DimensionToBow = "0";
+            this.DimensionToStern = "0";
+            this.DimensionToPort = "0";
+            this.DimensionToStarboard = "0";
+            this.EPFD = "0";
+            this.Month = "0";
+            this.Day = "0";
+            this.Hour = "24";
+            this.Minute = "60";
+            this.Draught = "0"; //Multiply by 10 when converting from int to binary
+            this.Destination = "12345678901234567890";
+            this.DTE = "1";
             this.spare = "N/A";
+        }
 
-            this.binaryArray = new string[20]
-            {   "000000",
-                "00",
-                "000000000000000000000000000000",
-                "1111",
-                "10000000",
-                "1111111111",
-                "0",
-                "10110101",
-                "1011011",
-                "111000010000",
-                "111111111",
-                "111100",
-                "00",
-                "000",
-                "0",
-                "0000000000000000000",
-                "",
-                "",
-                "",
-                ""
-            };
+        public void generateSentence()
+        {
+            string[] binaryArray = new string[20];
+            string binaryMessage;
+            List<byte> asciiValList = new List<byte>();
+
+            
+
+            //Update the values of the binary array with the new converted input values
+            binaryArray[0] = convertIntegerToBinary(messageType.ToString(), 6);
+            binaryArray[1] = convertIntegerToBinary(this.Repeat, 2);
+            binaryArray[2] = convertIntegerToBinary(this.MMSI, 30);
+
+            
+
+            binaryMessage = string.Join("", binaryArray);
+
+            string tempStr;
+            int tempInt;
+
+            //Console.WriteLine("Binary message: {0}", binaryMessage);
+            //Console.WriteLine("Length of binary message: {0}", binaryMessage.Length);
+
+            for (int i = 0; i < 168; i += 6)
+            {
+                tempStr = binaryMessage.Substring(i, 6);
+                tempInt = Convert.ToInt32(tempStr, 2) + 48;
+
+                // add 48 to decimal value
+                // add 8 if result is greater than 87
+                if (tempInt > 87)
+                {
+                    tempInt += 8;
+                }
+
+                //Console.WriteLine("Conversion :: {0}", tempInt);
+                asciiValList.Add(Convert.ToByte(tempInt));
+            }
+
+            //Convert binary values to decimal values and perform operations on them
+
+            //Console.WriteLine("ASCII FORM :: {0}", Encoding.ASCII.GetString(asciiValList.ToArray()));
+
+            this.Payload = Encoding.ASCII.GetString(asciiValList.ToArray());
+
+            /*this.Sentence = String.Format("{0},{1},{2},{3},{4},{5},{6}",
+                this.PacketID,
+                this.FragCount,
+                this.FragNum,
+                this.SequentialMessageID,
+                this.RadChanCode,
+                this.Payload,
+                this.FillBitNum);*/
+
+            //Convert the sentence to bytes and store in an array
+            //byte[] tempBytes = Encoding.ASCII.GetBytes(this.Sentence.Substring(1));
+            byte tempCheckSum = 0;
+
+            //Apply XOR to each byte in the array (storing the result in tempCheckSum variable)
+            //for (int i = 0; i < tempBytes.Length; i++)
+             //   tempCheckSum ^= tempBytes[i];
+
+            //Convert the tempCheckSum value to hexadecimal
+            this.CheckSum = Convert.ToString(tempCheckSum, 16);
+
+            //Add the checksum to the end of the sentence
+            //this.Sentence += "*" + this.CheckSum;
         }
 
         public string convertIntegerToBinary(string num, int padding, int multiplier = 1, bool signedInteger = false)

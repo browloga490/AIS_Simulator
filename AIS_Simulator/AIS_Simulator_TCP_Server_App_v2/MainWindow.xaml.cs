@@ -43,14 +43,26 @@ namespace AIS_Simulator_TCP_Server_App_v2
 
             string num = "45323.23451112";
 
-            
-            String integralNum = num.Substring(0, num.IndexOf('.'));
-            String fractionalNum = num.Substring(num.IndexOf('.') + 1, num.Length - (num.IndexOf('.') + 1));
-            int intnum = (int) (float.Parse("120.2345") * 60000);
-            string finalNum = Convert.ToString(intnum, 2);
+            /* Helpful URLs:
+             * https://www.aggsoft.com/ais-decoder.htm
+             * https://nmeachecksum.eqth.net/
+             * https://www.onlinegdb.com/online_csharp_compiler
+             */
 
-            Console.WriteLine("TEST :: {0}",finalNum);
-            Console.WriteLine("LENGTH :: {0}", finalNum.Length);
+
+
+            //String integralNum = num.Substring(0, num.IndexOf('.'));
+            //String fractionalNum = num.Substring(num.IndexOf('.') + 1, num.Length - (num.IndexOf('.') + 1));
+            //int intnum = (int) (float.Parse("120.2345") * 60000);
+            //string finalNum = Convert.ToString(intnum, 2);
+
+            //Console.WriteLine("TEST :: {0}",finalNum);
+            //Console.WriteLine("LENGTH :: {0}", finalNum.Length);
+
+            Convert.ToString((int) -78189720, 2);
+
+            //Console.WriteLine("Binary Value: {0}", Convert.ToInt32(doubleVal));
+            Console.WriteLine("Signed Binary Value: {0}", Convert.ToString((int)-78189720, 2));
         }
 
         private void BtnStart_Click(object sender, RoutedEventArgs e)

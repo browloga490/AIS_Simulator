@@ -120,7 +120,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
 
                 Console.WriteLine("MMSI VALUE IS :: {0}", SelectedShip.PosRepClassA.MMSI);
 
-                if (!(ShipList[ShipList.Count - 1].StatVoyData.vesselName.Equals("[ADD NEW SHIP]")))
+                if (!(ShipList[ShipList.Count - 1].StatVoyData.VesselName.Equals("[ADD NEW SHIP]")))
                 {
                     ShipList.Add(new ShipModel());
                 }
@@ -153,7 +153,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
             if (tempShip.BroadcastStatus.Equals("OFF") && !tempShip.IsNewShip && Server.ServerOn)
             {
                 tempShip.BroadcastStatus = "ON";
-                Server.ServerStatus += String.Format("Ship {0} :: Broadcast ON\n", tempShip.StatVoyData.vesselName);
+                Server.ServerStatus += String.Format("Ship {0} :: Broadcast ON\n", tempShip.StatVoyData.VesselName);
 
                 byte[] posRepMessage;
                 byte[] statVoyMessage;
@@ -167,7 +167,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
                         {
                             posRepMessage = Encoding.UTF8.GetBytes(tempShip.PosRepClassA.Sentence);
                             Server.SendToClients(posRepMessage);
-                            Server.ServerStatus += String.Format("Ship {0} :: Sent the message {1} to the clients\n", tempShip.StatVoyData.vesselName, tempShip.PosRepClassA.Sentence);
+                            Server.ServerStatus += String.Format("Ship {0} :: Sent the message {1} to the clients\n", tempShip.StatVoyData.VesselName, tempShip.PosRepClassA.Sentence);
                             Thread.Sleep(tempShip.PosRepClassA.BroadcastDelay * 1000);
                         }
                         catch (SocketException socExp) { }
@@ -183,7 +183,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
             if (SelectedShip.BroadcastStatus.Equals("ON"))
             {
                 SelectedShip.BroadcastStatus = "OFF";
-                Server.ServerStatus += String.Format("Ship {0} :: Broadcast OFF\n", SelectedShip.StatVoyData.vesselName);
+                Server.ServerStatus += String.Format("Ship {0} :: Broadcast OFF\n", SelectedShip.StatVoyData.VesselName);
             }
         }
     }
