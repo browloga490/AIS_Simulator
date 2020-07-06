@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,17 +9,6 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
 {
     class ShipModel : INotifyPropertyChanged
     {
-        private bool _isNewShip;
-        public bool IsNewShip
-        {
-            get => _isNewShip;
-            set
-            {
-                _isNewShip = value;
-                OnPropertyChanged("IsNewShip");
-            }
-        }
-
         private string _broadcastStatus;
         public string BroadcastStatus
         {
@@ -46,188 +34,6 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             }
         }
 
-        //All of the general variables needed to construct a message of any type
-
-
-
-        //All of the variables needed to construct the Position Report message
-
-        private int _messageType;
-        public int MessageType 
-        { 
-            get => _messageType;
-            set
-            {
-                _messageType = value;
-                OnPropertyChanged("MessageType");
-            } 
-        }
-
-        private string _repeat;
-        public string Repeat 
-        { 
-            get => _repeat;
-            set
-            {
-                _repeat = value;
-                OnPropertyChanged("Repeat");
-            } 
-        }
-
-        private string _mmsi;
-        public string MMSI
-        {
-            get => _mmsi;
-            set
-            {
-                _mmsi = value;
-                OnPropertyChanged("MMSI");
-            }
-        }
-
-        private string _navStatus;
-        public string NavStatus 
-        { 
-            get => _navStatus;
-            set
-            {
-                _navStatus = value;
-                OnPropertyChanged("NavStatus");
-            } 
-        }
-
-        private string _turn;
-        public string Turn 
-        {
-            get => _turn;
-            set
-            {
-                _turn = value;
-                OnPropertyChanged("Turn");
-            }
-        }
-
-        private string _speed;
-        public string Speed 
-        { 
-            get => _speed;
-            set
-            {
-                _speed = value;
-                OnPropertyChanged("Speed");
-            } 
-        }
-
-        private string _accuracy;
-        public string Accuracy 
-        {
-            get => _accuracy;
-            set
-            {
-                _accuracy = value;
-                OnPropertyChanged("Accuracy");
-            } 
-        }
-
-        private string _longitude;
-        public string Longitude 
-        { 
-            get => _longitude; 
-            set
-            {
-                _longitude = value;
-                OnPropertyChanged("Longitude");
-            }
-        }
-
-        private string _latitude;
-        public string Latitude 
-        { 
-            get => _latitude;
-            set
-            {
-                _latitude = value;
-                OnPropertyChanged("Latitude");
-            } 
-        }
-
-        private string _course;
-        public string Course 
-        { 
-            get => _course;
-            set
-            {
-                _course = value;
-                OnPropertyChanged("Course");
-            } 
-        }
-
-        private string _heading;
-        public string Heading 
-        { 
-            get => _heading;
-            set
-            {
-                _heading = value;
-                OnPropertyChanged("Heading");
-            }
-        }
-
-        private string _timestamp;
-        public string Timestamp 
-        { 
-            get => _timestamp;
-            set
-            {
-                _timestamp = value;
-                OnPropertyChanged("Timestamp");
-            } 
-        }
-
-        private string _maneuver;
-        public string Maneuver 
-        { 
-            get => _maneuver;
-            set
-            {
-                _maneuver = value;
-                OnPropertyChanged("Maneuver");
-            } 
-        }
-
-        private string _spare;
-        public string Spare 
-        { 
-            get => _spare;
-            set
-            {
-                _spare = value;
-                OnPropertyChanged("Spare");
-            } 
-        }
-
-        private string _raim;
-        public string RAIM 
-        { 
-            get => _raim;
-            set
-            {
-                _raim = value;
-                OnPropertyChanged("RAIM");
-            } 
-        }
-
-        private string _radio;
-        public string Radio 
-        { 
-            get => _radio; 
-            set
-            {
-                _radio = value;
-                OnPropertyChanged("Radio");
-            }
-        }
-
         private StaticAndVoyageRelatedData _statVoyData;
         public StaticAndVoyageRelatedData StatVoyData
         {
@@ -239,6 +45,17 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             }
         }
 
+        private bool _isNewShip;
+        public bool IsNewShip
+        {
+            get => _isNewShip;
+            set
+            {
+                _isNewShip = value;
+                OnPropertyChanged("IsNewShip");
+            }
+        }
+
         public ShipModel()
         {
             this.PosRepClassA = new PositionReportClassA();
@@ -246,23 +63,6 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             this.StatVoyData.vesselName = "[ADD NEW SHIP]";
             this._broadcastStatus = "OFF";
             this.IsNewShip = true;
-
-            this.MessageType = 0; //Value initially set to 0 (default)
-            this.Repeat = "0";
-            this.MMSI = "000000000"; //Value initially set to 0 (default)
-            this.NavStatus = "15";
-            this.Turn = "701.234";
-            this.Speed = "111.1";
-            this.Accuracy = "0";
-            this.Longitude = "181"; //Value initially set to 181 (default)
-            this.Latitude = "91"; //Value initially set to 91 (default)
-            this.Course = "360";
-            this.Heading = "511";
-            this.Timestamp = "60"; //Value initially set to 60 (default)
-            this.Maneuver = "0";
-            this.Spare = "0";
-            this.RAIM = "0";
-            this.Radio = "0";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -277,6 +77,34 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
 
     public class PositionReportClassA
     {
+        public int messageType { get; set; }
+        public string repeat { get; set; }
+
+        //DANGER ZONE!!!
+        private string mmsi;
+        public string MMSI 
+        {
+            get => mmsi;
+            set
+            {
+                mmsi = value;
+                OnPropertyChanged("MMSI");
+            } 
+        }
+        public string navStatus { get; set; }
+        public string turn { get; set; }
+        public string speed { get; set; }
+        public string accuracy { get; set; }
+        public string longitude { get; set; }
+        public string latitude { get; set; }
+        public string course { get; set; }
+        public string heading { get; set; }
+        public string timestamp { get; set; }
+        public string maneuver { get; set; }
+        public string spare { get; set; }
+        public string raim { get; set; }
+        public string radio { get; set; }
+
         public string[] binaryArray { get; set; }
 
         public string sentence { get; set; }
@@ -295,6 +123,23 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
         public PositionReportClassA()
         {
             //Initializing with default values
+
+            this.messageType = 0; //Value initially set to 0 (default)
+            this.repeat = "0";
+            this.mmsi = "000000000"; //Value initially set to 0 (default)
+            this.navStatus = "15";
+            this.turn = "701.234";
+            this.speed = "111.1";
+            this.accuracy = "0";
+            this.longitude = "181"; //Value initially set to 181 (default)
+            this.latitude = "91"; //Value initially set to 91 (default)
+            this.course = "360";
+            this.heading = "511";
+            this.timestamp = "60"; //Value initially set to 60 (default)
+            this.maneuver = "0";
+            this.spare = "0";
+            this.raim = "0";
+            this.radio = "0";
 
             this.binaryArray = new string[16]
             {   "000000",
@@ -317,7 +162,6 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             this.sentence = "!AIVDM,1,1,,A,13HOI:0P0000VOHLCnHQKwvL05Ip,0*23";
             this.broadcastDelay = 4;
 
-            //Choose these values each time you generate a sentence (they should be the parameters of the method)
             this.packetID = "!AIVDM";
             this.fragCount = "1";
             this.fragNum = "1";
