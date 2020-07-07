@@ -1069,10 +1069,6 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             {
                 _fillBitNum = value;
                 OnPropertyChanged("FillBitNum");
-                if (initialized)
-                {
-                    generateSentence();
-                }
             }
         }
 
@@ -1097,7 +1093,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             this.MMSI = "000000000"; //Can change
             this.AISVersion = "0"; //Can change
             this.IMO = "000000000"; //Can change
-            this.CallSign = "ABCD123"; //Can change
+            this.CallSign = "ABCDEFG"; //Can change
             this.VesselName = "[ADD NEW SHIP]"; //Can change
             this.ShipType = "0";
             this.DimensionToBow = "0";
@@ -1110,7 +1106,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             this.Hour = "24";
             this.Minute = "60";
             this.Draught = "0"; //Multiply by 10 when converting from int to binary
-            this.Destination = "12345678901234567890";
+            this.Destination = "FINALDESTINATION";
             this.DTE = "1";
             this.spare = "0";
 
@@ -1129,7 +1125,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
 
         public void generateSentence()
         {
-            string[] binaryArray = new string[20];
+            string[] binaryArray = new string[21];
             string binaryMessage;
             List<byte> asciiValList = new List<byte>();
 
@@ -1155,7 +1151,8 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             binaryArray[16] = convertIntegerToBinary(this.Minute, 6);
             binaryArray[17] = convertIntegerToBinary(this.Draught, 8, 10);
             binaryArray[18] = convertStringToBinary(this.Destination, 120);
-            binaryArray[19] = convertIntegerToBinary(this.spare, 1);
+            binaryArray[19] = convertIntegerToBinary(this.DTE, 1);
+            binaryArray[20] = convertIntegerToBinary(this.spare, 1);
 
             
             //Concatenate all of the string values in the binaryArray into one string
@@ -1164,22 +1161,27 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             string tempStr;
             int tempInt;
 
-            //Console.WriteLine("Binary message: {0}", binaryMessage);
-            //Console.WriteLine("Length of binary message: {0}", binaryMessage.Length);
+            Console.WriteLine("Binary message: {0}", binaryMessage);
+            Console.WriteLine("Length of binary message: {0}", binaryMessage.Length);
 
             //Separate the binaryMessage string into 6-char substrings and store them all in a list
             for (int i = 0; i < 424; i += 6)
             {
-                tempStr = binaryMessage.Substring(i, 6);
-                tempInt = Convert.ToInt32(tempStr, 2) + 48;
-
-                //Add 48 to decimal value
-                //Add 8 if result is greater than 87
-                if (tempInt > 87)
+                if (binaryMessage.Length - i >= 6)
+                    tempStr = binaryMessage.Substring(i, 6);
+                else
                 {
-                    tempInt += 8;
+                    tempStr = binaryMessage.Substring(i).PadLeft(6, '0');
+                    this.FillBitNum = Convert.ToString(binaryMessage.Length - i);
                 }
 
+                //Add 48 to decimal value
+                tempInt = Convert.ToInt32(tempStr, 2) + 48;
+
+                //Add 8 if result is greater than 87
+                if (tempInt > 87)
+                    tempInt += 8;
+                
                 asciiValList.Add(Convert.ToByte(tempInt));
             }
 
@@ -1190,11 +1192,8 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             Console.WriteLine("Temp Payload Val : {0}", tempPayload);
             Console.WriteLine("Temp Payload Length : {0}", tempPayload.Length);
 
-            //tempPayload has a length of only 72 - thats why it is failing
-            //Remove all calls to generateSentence() and add a new call to it in the saveConfiguration() method in the ShipViewModel
-
-            this.PayloadOne = tempPayload.Substring(0, 82);
-            this.PayloadTwo = tempPayload.Remove(0, 82);
+            this.PayloadOne = tempPayload.Substring(0, 60);
+            this.PayloadTwo = tempPayload.Remove(0, 60);
 
             this.SentenceOne = String.Format("{0},{1},{2},{3},{4},{5},{6}",
                 this.PacketID,
@@ -1203,7 +1202,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
                 "3",
                 this.RadChanCode,
                 this.PayloadOne,
-                this.FillBitNum);
+                "0");
 
             this.SentenceTwo = String.Format("{0},{1},{2},{3},{4},{5},{6}",
                 this.PacketID,
@@ -1260,6 +1259,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             {
                 finalNum = finalNum.Remove(0, finalNum.Length - padding);
             }
+            
 
             return finalNum;
         }
@@ -1276,20 +1276,22 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
 
                 if (tempStr.Length > padVal)
                 {
-                    tempStr.Remove(0, tempStr.Length - padVal);
+                    result += tempStr.Remove(0, tempStr.Length - padVal);
                 }
                 else if (tempStr.Length < padVal)
                 {
-                    tempStr.PadLeft(padVal);
+                    result += tempStr.PadLeft(padVal);
                 }
-
-                result += tempStr;
             }
+
+            Console.WriteLine("strVal length : {0} == {1}", strVal, result.Length);
 
             while (result.Length < padding)
             {
-                result = "000000" + result;
+                result += "000000";
             }
+
+            Console.WriteLine("strVal length after padding : {0} == {1}", strVal, result.Length);
 
             return result;
         }
