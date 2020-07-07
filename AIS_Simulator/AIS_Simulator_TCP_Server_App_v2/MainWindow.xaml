@@ -72,10 +72,10 @@
                     <Label Content="IMO:" Margin="57,276,448,106" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>
 
                     <TextBox Name="txtVesselName" Text="{Binding ElementName=lvShipList, Path=SelectedItem.StatVoyData.VesselName}" Height="30" Margin="176,37,282,345" CharacterCasing="Upper"/>
-                    <TextBox Name="txtCallSign" Text="{Binding ElementName=lvShipList, Path=SelectedItem.StatVoyData.callSign}" Height="30" Margin="176,95,282,287" CharacterCasing="Upper"/>
-                    <TextBox Name="txtMMSI" Text="{Binding ElementName=lvShipList, Path=SelectedItem.StatVoyData.mmsi}" Height="30" Margin="176,154,282,228" CharacterCasing="Upper"/>
-                    <TextBox Name="txtAISVersion" Text="{Binding ElementName=lvShipList, Path=SelectedItem.StatVoyData.aisVersion}" Height="30" Margin="176,213,282,169" CharacterCasing="Upper"/>
-                    <TextBox Name="txtIMO" Text="{Binding ElementName=lvShipList, Path=SelectedItem.StatVoyData.imo}" Height="30" Margin="176,276,282,106" CharacterCasing="Upper"/>
+                    <TextBox Name="txtCallSign" Text="{Binding ElementName=lvShipList, Path=SelectedItem.StatVoyData.CallSign}" Height="30" Margin="176,95,282,287" CharacterCasing="Upper"/>
+                    <TextBox Name="txtMMSI" Text="{Binding ElementName=lvShipList, Path=SelectedItem.StatVoyData.MMSI}" Height="30" Margin="176,154,282,228" CharacterCasing="Upper"/>
+                    <TextBox Name="txtAISVersion" Text="{Binding ElementName=lvShipList, Path=SelectedItem.StatVoyData.AISVersion}" Height="30" Margin="176,213,282,169" CharacterCasing="Upper"/>
+                    <TextBox Name="txtIMO" Text="{Binding ElementName=lvShipList, Path=SelectedItem.StatVoyData.IMO}" Height="30" Margin="176,276,282,106" CharacterCasing="Upper"/>
                 </Grid>
             </ScrollViewer>
             <Grid Grid.Row="2">

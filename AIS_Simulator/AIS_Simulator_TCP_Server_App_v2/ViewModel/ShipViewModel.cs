@@ -168,12 +168,33 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
                             posRepMessage = Encoding.UTF8.GetBytes(tempShip.PosRepClassA.Sentence);
                             Server.SendToClients(posRepMessage);
                             Server.ServerStatus += String.Format("Ship {0} :: Sent the message {1} to the clients\n", tempShip.StatVoyData.VesselName, tempShip.PosRepClassA.Sentence);
+                            
                             Thread.Sleep(tempShip.PosRepClassA.BroadcastDelay * 1000);
                         }
                         catch (SocketException socExp) { }
                     }
                 }, Server.CancelTokenSource.Token);
-                
+
+                Task.Run(() =>
+                {
+                    while (Server.ServerOn && tempShip.BroadcastStatus.Equals("ON"))
+                    {
+                        try
+                        {
+                            statVoyMessage = Encoding.UTF8.GetBytes(tempShip.StatVoyData.SentenceOne);
+                            Server.SendToClients(statVoyMessage);
+                            Server.ServerStatus += String.Format("Ship {0} :: Sent the message {1} to the clients\n", tempShip.StatVoyData.VesselName, tempShip.StatVoyData.SentenceOne);
+
+                            statVoyMessage = Encoding.UTF8.GetBytes(tempShip.StatVoyData.SentenceTwo);
+                            Server.SendToClients(statVoyMessage);
+                            Server.ServerStatus += String.Format("Ship {0} :: Sent the message {1} to the clients\n", tempShip.StatVoyData.VesselName, tempShip.StatVoyData.SentenceTwo);
+
+                            Thread.Sleep(tempShip.PosRepClassA.BroadcastDelay * 1000);
+                        }
+                        catch (SocketException socExp) { }
+                    }
+                }, Server.CancelTokenSource.Token);
+
             }
             
         }
