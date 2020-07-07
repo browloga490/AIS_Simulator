@@ -472,12 +472,12 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             this.MMSI = "000000000"; //Value initially set to 0 (default)
             this.NavStatus = "15";
             this.Turn = "701.234";
-            this.Speed = "111.1";
+            this.Speed = "100.1";
             this.Accuracy = "0";
             this.Longitude = "181"; //Value initially set to 181 (default)
             this.Latitude = "91"; //Value initially set to 91 (default)
             this.Course = "360";
-            this.Heading = "511";
+            this.Heading = "54";
             this.Timestamp = "60"; //Value initially set to 60 (default)
             this.Maneuver = "0";
             this.Spare = "0";

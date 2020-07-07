@@ -8,14 +8,14 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="496.5" Width="634">
     <Grid>
-        <Grid x:Name="MainView" Visibility="Hidden">
+        <Grid x:Name="MainView" Visibility="Visible">
             <Label x:Name="lblHost" Content="Host" HorizontalAlignment="Left" Margin="61,43,0,0" VerticalAlignment="Top" Height="26" Width="35"/>
             <Button x:Name="btnStart" Content="Start" HorizontalAlignment="Left" Margin="371,46,0,0" VerticalAlignment="Top" Width="75" Height="20" Click="BtnStart_Click"/>
             <TextBox x:Name="txtHost" HorizontalAlignment="Left" Height="23" Margin="102,46,0,0" TextWrapping="Wrap" Text="{Binding Server.ServerHost, Mode=TwoWay}" VerticalAlignment="Top" Width="120" UndoLimit="106"/>
             <Label x:Name="lblPort" Content="Port" HorizontalAlignment="Left" Margin="237,43,0,0" VerticalAlignment="Top" Height="26" Width="31"/>
             <TextBox x:Name="txtPort" HorizontalAlignment="Left" Height="23" Margin="277,46,0,0" TextWrapping="Wrap" Text="{Binding Server.ServerPort, Mode=TwoWay}" VerticalAlignment="Top" Width="56" UndoLimit="106"/>
             <Button x:Name="btnStop" Content="Stop" HorizontalAlignment="Left" Margin="451,46,0,0" VerticalAlignment="Top" Width="75" Height="20" Click="BtnStop_Click"/>
-            <TextBox x:Name="txtStatus" Text="{Binding Server.ServerStatus}" HorizontalAlignment="Left" Height="155" Margin="61,288,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="477" VerticalScrollBarVisibility="Auto"/>
+            <TextBox x:Name="txtStatus" Text="{Binding Server.ServerStatus}" HorizontalAlignment="Left" Height="155" Margin="61,288,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="477" VerticalScrollBarVisibility="Auto" IsReadOnly="True"/>
             <ListView x:Name="lvShipList" HorizontalAlignment="Left" Height="135" Margin="61,112,0,0" VerticalAlignment="Top" Width="235" ItemsSource="{Binding ShipList}" SelectedItem="{Binding SelectedShip}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -34,7 +34,7 @@
             <Label x:Name="lblShipList" Content="Ships" HorizontalAlignment="Left" Margin="61,86,0,0" VerticalAlignment="Top"/>
             <Label x:Name="lblServerLog" Content="Server Log" HorizontalAlignment="Left" Margin="61,262,0,0" VerticalAlignment="Top"/>
         </Grid>
-        <Grid x:Name="ConfigureView" Visibility="Visible">
+        <Grid x:Name="ConfigureView" Visibility="Hidden">
             <Grid.RowDefinitions>
                 <RowDefinition Height="54" />
                 <RowDefinition Height="*" />
@@ -43,9 +43,9 @@
             <Menu Name="Menu" Grid.Row="0"  Height="54" Width="634">
                 <MenuItem x:Name="PosRepMenuItem" Header="Position Report Class A" Height="54" FontWeight="Bold" BorderThickness="2" BorderBrush="Black" Click="PosRepMenuItem_Click"/>
                 <MenuItem x:Name="StatVoyDataMenuItem" Header="Static and Voyage Related Data" Height="54" FontWeight="Bold" BorderThickness="2" BorderBrush="Black" Click="StatVoyDataMenuItem_Click"/>
-                <MenuItem x:Name="ShipMotionMenuItem" Header="Ship Motion" Height="54" FontWeight="Bold" BorderThickness="2" BorderBrush="Black"/>
+                <MenuItem x:Name="ShipMotionMenuItem" Header="Ship Motion" Height="54" FontWeight="Bold" BorderThickness="2" BorderBrush="Black" Click="ShipMotionMenuItem_Click"/>
             </Menu>
-            <ScrollViewer x:Name="svPosRep" Grid.Row="1" Visibility="Visible">
+            <ScrollViewer x:Name="svPosRep" Grid.Row="1" Visibility="Hidden">
                 <Grid >
                     <ComboBox Name="cbxMessageType"  Margin="176,39,76,345"
                               SelectedValue="{Binding ElementName=lvShipList, Path=SelectedItem.PosRepClassA.MessageType, Mode=TwoWay}"
@@ -76,6 +76,17 @@
                     <TextBox Name="txtMMSI" Text="{Binding ElementName=lvShipList, Path=SelectedItem.StatVoyData.MMSI}" Height="30" Margin="176,154,282,228" CharacterCasing="Upper"/>
                     <TextBox Name="txtAISVersion" Text="{Binding ElementName=lvShipList, Path=SelectedItem.StatVoyData.AISVersion}" Height="30" Margin="176,213,282,169" CharacterCasing="Upper"/>
                     <TextBox Name="txtIMO" Text="{Binding ElementName=lvShipList, Path=SelectedItem.StatVoyData.IMO}" Height="30" Margin="176,276,282,106" CharacterCasing="Upper"/>
+                </Grid>
+            </ScrollViewer>
+            <ScrollViewer Name="svShipMovement"  Grid.Row="1" Visibility="Hidden">
+                <Grid>
+                    <Label Content="Heading:" Margin="126,109,379,273" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                    <Label Content="Speed:" Margin="126,167,379,215" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                    <Label Content="BroadcastDelay:" Margin="126,226,379,156" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>
+
+                    <TextBox Name="txtHeading" Text="{Binding ElementName=lvShipList, Path=SelectedItem.PosRepClassA.Heading}" Height="30" Margin="245,109,213,273" CharacterCasing="Upper"/>
+                    <TextBox Name="txtSpeed" Text="{Binding ElementName=lvShipList, Path=SelectedItem.PosRepClassA.Speed}" Height="30" Margin="245,167,213,215" CharacterCasing="Upper"/>
+                    <TextBox Name="txtBroadcastDelay" Text="{Binding ElementName=lvShipList, Path=SelectedItem.PosRepClassA.BroadcastDelay}" Height="30" Margin="245,226,213,156" CharacterCasing="Upper"/>
                 </Grid>
             </ScrollViewer>
             <Grid Grid.Row="2">
