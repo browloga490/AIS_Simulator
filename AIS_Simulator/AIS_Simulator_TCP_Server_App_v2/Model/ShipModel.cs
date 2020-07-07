@@ -617,6 +617,11 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
                 finalNum = Convert.ToString(int.Parse(num)*multiplier, 2).PadLeft(padding, '0');
             }
 
+            if (finalNum.Length > padding)
+            {
+                finalNum = finalNum.Remove(0, finalNum.Length - padding);
+            }
+
             return finalNum;
         }
 
