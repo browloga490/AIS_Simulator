@@ -1,0 +1,5 @@
+C:\Users\Logoswego\Documents\MC-CM Files\AIS_Simulator\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v3\obj\Debug\AIS_Simulator_TCP_Server_App_v3.csprojAssemblyReference.cache
+C:\Users\Logoswego\Documents\MC-CM Files\AIS_Simulator\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v3\obj\Debug\MainWindow.g.cs
+C:\Users\Logoswego\Documents\MC-CM Files\AIS_Simulator\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v3\obj\Debug\App.g.cs
+C:\Users\Logoswego\Documents\MC-CM Files\AIS_Simulator\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v3\obj\Debug\AIS_Simulator_TCP_Server_App_v3_MarkupCompile.cache
+C:\Users\Logoswego\Documents\MC-CM Files\AIS_Simulator\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v3\obj\Debug\AIS_Simulator_TCP_Server_App_v3_MarkupCompile.lref

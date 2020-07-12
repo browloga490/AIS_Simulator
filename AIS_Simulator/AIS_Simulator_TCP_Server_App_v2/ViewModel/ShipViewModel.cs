@@ -114,13 +114,16 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
 
         public void saveConfiguration(string shipName)
         {
+            //Generates a new sentence based on the new/updated payload values
+            //Creates a new template ship if a new ship was just been created
+
             if (!shipName.Equals("[ADD NEW SHIP]"))
             {
                 SelectedShip.IsNewShip = false;
 
-                Console.WriteLine("MMSI VALUE IS :: {0}", SelectedShip.PosRepClassA.MMSI);
+                Console.WriteLine("MMSI VALUE IS :: {0}", SelectedShip.MMSI);
 
-                if (!(ShipList[ShipList.Count - 1].StatVoyData.VesselName.Equals("[ADD NEW SHIP]")))
+                if (!(ShipList[ShipList.Count - 1].MTypeFive.VesselName.Equals("[ADD NEW SHIP]")))
                 {
                     ShipList.Add(new ShipModel());
                 }
@@ -153,7 +156,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
             if (tempShip.BroadcastStatus.Equals("OFF") && !tempShip.IsNewShip && Server.ServerOn)
             {
                 tempShip.BroadcastStatus = "ON";
-                Server.ServerStatus += String.Format("\nShip {0} :: Broadcast ON\n", tempShip.StatVoyData.VesselName);
+                Server.ServerStatus += String.Format("\nShip {0} :: Broadcast ON\n", tempShip.MTypeFive.VesselName);
 
                 byte[] posRepMessage;
                 byte[] statVoyMessage;
@@ -169,15 +172,15 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
                         {
                             //Convert the ship's Position Report Class A message sentence to bytes 
                             //and send them to the connected clients
-                            posRepMessage = Encoding.UTF8.GetBytes(tempShip.PosRepClassA.Sentence);
+                            posRepMessage = Encoding.UTF8.GetBytes(tempShip.MTypeOne.Sentence);
                             Server.SendToClients(posRepMessage);
-                            Server.ServerStatus += String.Format("\nShip {0} :: Sent the message {1} to the clients\n", tempShip.StatVoyData.VesselName, tempShip.PosRepClassA.Sentence);
+                            Server.ServerStatus += String.Format("\nShip {0} :: Sent the message {1} to the clients\n", tempShip.MTypeFive.VesselName, tempShip.MTypeOne.Sentence);
 
                             //Update the longitude and latitude values of the ship to simulate its motion
                             moveShip(tempShip);
 
                             //Make the thread wait for the desired broadcast delay time before sending the next broadcast
-                            Thread.Sleep(tempShip.PosRepClassA.BroadcastDelay * 1000);
+                            Thread.Sleep(tempShip.MTypeOne.BroadcastDelay * 1000);
                         }
                         catch (SocketException socExp) { }
                     }
@@ -192,16 +195,16 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
                         {
                             //Convert the ship's Static and Voyage Related Data message sentences to bytes 
                             //and send them to the connected clients
-                            statVoyMessage = Encoding.UTF8.GetBytes(tempShip.StatVoyData.SentenceOne);
+                            statVoyMessage = Encoding.UTF8.GetBytes(tempShip.MTypeFive.SentenceOne);
                             Server.SendToClients(statVoyMessage);
-                            Server.ServerStatus += String.Format("\nShip {0} :: Sent the message {1} to the clients\n", tempShip.StatVoyData.VesselName, tempShip.StatVoyData.SentenceOne);
+                            Server.ServerStatus += String.Format("\nShip {0} :: Sent the message {1} to the clients\n", tempShip.MTypeFive.VesselName, tempShip.MTypeFive.SentenceOne);
 
-                            statVoyMessage = Encoding.UTF8.GetBytes(tempShip.StatVoyData.SentenceTwo);
+                            statVoyMessage = Encoding.UTF8.GetBytes(tempShip.MTypeFive.SentenceTwo);
                             Server.SendToClients(statVoyMessage);
-                            Server.ServerStatus += String.Format("\nShip {0} :: Sent the message {1} to the clients\n", tempShip.StatVoyData.VesselName, tempShip.StatVoyData.SentenceTwo);
+                            Server.ServerStatus += String.Format("\nShip {0} :: Sent the message {1} to the clients\n", tempShip.MTypeFive.VesselName, tempShip.MTypeFive.SentenceTwo);
 
                             //Make the thread wait for the desired broadcast delay time before sending the next broadcast
-                            Thread.Sleep(tempShip.PosRepClassA.BroadcastDelay * 1000);
+                            Thread.Sleep(tempShip.MTypeOne.BroadcastDelay * 1000);
                         }
                         catch (SocketException socExp) { }
                     }
@@ -217,7 +220,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
             if (SelectedShip.BroadcastStatus.Equals("ON"))
             {
                 SelectedShip.BroadcastStatus = "OFF";
-                Server.ServerStatus += String.Format("\nShip {0} :: Broadcast OFF\n", SelectedShip.StatVoyData.VesselName);
+                Server.ServerStatus += String.Format("\nShip {0} :: Broadcast OFF\n", SelectedShip.MTypeFive.VesselName);
             }
         }
 
@@ -226,14 +229,14 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
             //Based on the set langitude, latitude, heading, speed, and broadcast delay of a ship, simulate its motion
 
             //Retrieve the longitude, latitude, and heading values of the ship and convert them to radians
-            double longitudeOne = double.Parse(ship.PosRepClassA.Longitude) * Math.PI / 180;
-            double latitudeOne = double.Parse(ship.PosRepClassA.Latitude) * Math.PI / 180;
-            int heading = (int) (int.Parse(ship.PosRepClassA.Heading) * Math.PI / 180);
+            double longitudeOne = double.Parse(ship.MTypeOne.Longitude) * Math.PI / 180;
+            double latitudeOne = double.Parse(ship.MTypeOne.Latitude) * Math.PI / 180;
+            int heading = (int) (int.Parse(ship.MTypeOne.Heading) * Math.PI / 180);
 
             //Multiply the speed by 1.852 to convert it from knots to km/h
-            double speed = double.Parse(ship.PosRepClassA.Speed)*1.852; 
+            double speed = double.Parse(ship.MTypeOne.Speed)*1.852; 
 
-            int broadcastDelay = ship.PosRepClassA.BroadcastDelay;
+            int broadcastDelay = ship.MTypeOne.BroadcastDelay;
 
             //Calculate the distance that the ship should travel between each 
             //broadcast given the speed (km/h) and broadcast delay (seconds)
@@ -250,8 +253,8 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
                            Math.Cos(distance / R) - (Math.Sin(latitudeOne) * Math.Sin(latitudeTwo)));
 
             //Update the ship's longitude and latitude values with the previously calculated values
-            ship.PosRepClassA.Latitude = Convert.ToString(latitudeTwo * 180 / Math.PI);
-            ship.PosRepClassA.Longitude = Convert.ToString(longitudeTwo * 180 / Math.PI);
+            ship.MTypeOne.Latitude = Convert.ToString(latitudeTwo * 180 / Math.PI);
+            ship.MTypeOne.Longitude = Convert.ToString(longitudeTwo * 180 / Math.PI);
         }
     }
 }

@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AIS_Simulator_TCP_Server_App_v2.View
+namespace AIS_Simulator_TCP_Server_App_v3
 {
     /// <summary>
-    /// Interaction logic for UCConfigureShip.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class UCConfigureShip : UserControl
+    public partial class MainWindow : Window
     {
-        public UCConfigureShip()
+        public MainWindow()
         {
             InitializeComponent();
         }

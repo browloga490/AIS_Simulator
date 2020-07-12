@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EF3E31A1-9F8D-4CD2-A902-8A18C6B3E0B0}</ProjectGuid>
+    <ProjectGuid>{2D3717E9-BA44-482B-BF29-6931EF609D8E}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>AIS_Simulator_TCP_Server_App_v2</RootNamespace>
-    <AssemblyName>AIS_Simulator_TCP_Server_App_v2</AssemblyName>
+    <RootNamespace>AIS_Simulator_TCP_Server_App_v3</RootNamespace>
+    <AssemblyName>AIS_Simulator_TCP_Server_App_v3</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -37,7 +37,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Device" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -56,10 +55,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\MessageTypeFiveModel.cs" />
-    <Compile Include="Model\MessageTypeOneModel.cs" />
-    <Compile Include="Model\TCPServerModel.cs" />
-    <Compile Include="ViewModel\ShipViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -74,7 +69,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\ShipModel.cs" />
+    <Compile Include="Model\BroadcastSourceModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -101,6 +96,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ViewModel\" />
     <Folder Include="View\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

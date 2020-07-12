@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIS_Simulator_TCP_Server_Ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MVVMTutExample", "MVVMTutExample\MVVMTutExample.csproj", "{D91F81A3-0782-41BB-89E2-60EFC46759ED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIS_Simulator_TCP_Server_App_v3", "AIS_Simulator_TCP_Server_App_v3\AIS_Simulator_TCP_Server_App_v3.csproj", "{2D3717E9-BA44-482B-BF29-6931EF609D8E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{D91F81A3-0782-41BB-89E2-60EFC46759ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D91F81A3-0782-41BB-89E2-60EFC46759ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D91F81A3-0782-41BB-89E2-60EFC46759ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D3717E9-BA44-482B-BF29-6931EF609D8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D3717E9-BA44-482B-BF29-6931EF609D8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D3717E9-BA44-482B-BF29-6931EF609D8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D3717E9-BA44-482B-BF29-6931EF609D8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
