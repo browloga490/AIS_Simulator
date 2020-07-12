@@ -41,6 +41,8 @@ namespace AIS_Simulator_TCP_Server_App_v2
             serverON = false;
             MainView.Visibility = Visibility.Visible;
             ConfigureView.Visibility = Visibility.Hidden;
+
+            VM.MovementTypeComboBox = cbxMovementType;
         }
 
         private void BtnStart_Click(object sender, RoutedEventArgs e)

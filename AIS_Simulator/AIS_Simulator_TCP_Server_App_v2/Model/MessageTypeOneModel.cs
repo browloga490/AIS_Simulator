@@ -162,7 +162,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             set
             {
                 _latitude = value;
-                OnPropertyChanged("IsNewShip");
+                OnPropertyChanged("Latitude");
                 if (initialized)
                 {
                     generateSentence();
@@ -389,6 +389,42 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             }
         }
 
+        //Circular Motion Values
+
+        private string _radius;
+        public string Radius
+        {
+            get => _radius;
+            set
+            {
+                _radius = value;
+                OnPropertyChanged("Radius");
+            }
+
+        }
+
+        private string _centrePointLongitude;
+        public string CentrePointLongitude
+        {
+            get => _centrePointLongitude;
+            set
+            {
+                _centrePointLongitude = value;
+                OnPropertyChanged("CentrePointLongitude");
+            }
+        }
+
+        private string _centrePointLatitude;
+        public string CentrePointLatitude
+        {
+            get => _centrePointLatitude;
+            set
+            {
+                _centrePointLatitude = value;
+                OnPropertyChanged("CentrePointLatitude");
+            }
+        }
+
         public MessageTypeOneModel()
         {
             this.initialized = false;
@@ -423,6 +459,10 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             this.Payload = "";
             this.FillBitNum = "0";
             this.CheckSum = "";
+
+            this.Radius = "5";
+            this.CentrePointLongitude = "180.0000";
+            this.CentrePointLatitude = "90.0000";
 
             this.initialized = true;
             generateSentence();

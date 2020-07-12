@@ -58,6 +58,7 @@
     </ApplicationDefinition>
     <Compile Include="Model\MessageTypeFiveModel.cs" />
     <Compile Include="Model\MessageTypeOneModel.cs" />
+    <Compile Include="Model\MessageTypeSixModel.cs" />
     <Compile Include="Model\TCPServerModel.cs" />
     <Compile Include="ViewModel\ShipViewModel.cs" />
     <Page Include="MainWindow.xaml">

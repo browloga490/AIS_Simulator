@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="496.5" Width="634">
     <Grid>
-        <Grid x:Name="MainView" Visibility="Visible">
+        <Grid x:Name="MainView" Visibility="Hidden">
             <Label x:Name="lblHost" Content="Host" HorizontalAlignment="Left" Margin="61,43,0,0" VerticalAlignment="Top" Height="26" Width="35"/>
             <Button x:Name="btnStart" Content="Start" HorizontalAlignment="Left" Margin="371,46,0,0" VerticalAlignment="Top" Width="75" Height="20" Click="BtnStart_Click"/>
             <TextBox x:Name="txtHost" HorizontalAlignment="Left" Height="23" Margin="102,46,0,0" TextWrapping="Wrap" Text="{Binding Server.ServerHost, Mode=TwoWay}" VerticalAlignment="Top" Width="120" UndoLimit="106"/>
@@ -33,7 +33,7 @@
             <Label x:Name="lblShipList" Content="Ships" HorizontalAlignment="Left" Margin="61,86,0,0" VerticalAlignment="Top"/>
             <Label x:Name="lblServerLog" Content="Server Log" HorizontalAlignment="Left" Margin="61,262,0,0" VerticalAlignment="Top"/>
         </Grid>
-        <Grid x:Name="ConfigureView" Visibility="Hidden">
+        <Grid x:Name="ConfigureView" Visibility="Visible">
             <Grid.RowDefinitions>
                 <RowDefinition Height="54" />
                 <RowDefinition Height="*" />
@@ -56,9 +56,9 @@
                     <Label Content="Longitude:" Margin="57,155,448,227" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>
                     <Label Content="Latitude:" Margin="57,215,448,167" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>
                     <Label Content="Timestamp:" Margin="57,276,448,106" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>
-                    <TextBox Name="txtMMSI1" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeOne.MMSI}" Height="30" Margin="176,95,282,287"/>
-                    <TextBox Name="txtLongitude" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeOne.Longitude}" Height="30" Margin="176,155,282,227"/>
-                    <TextBox Name="txtLatitude" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeOne.Latitude}" Height="30" Margin="176,215,282,167"/>
+                    <TextBox Name="txtMMSI1" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MMSI}" Height="30" Margin="176,95,282,287"/>
+                    <TextBox Name="txtLongitude" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeOne.Longitude, Mode=TwoWay}" Height="30" Margin="176,155,282,227"/>
+                    <TextBox Name="txtLatitude" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeOne.Latitude, Mode=TwoWay}" Height="30" Margin="176,215,282,167"/>
                     <TextBox Name="txtTimestamp" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeOne.Timestamp}" Height="30" Margin="176,276,282,106"/>
                 </Grid>
             </ScrollViewer>
@@ -77,15 +77,58 @@
                     <TextBox Name="txtIMO" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeFive.IMO}" Height="30" Margin="176,276,282,106" CharacterCasing="Upper"/>
                 </Grid>
             </ScrollViewer>
-            <ScrollViewer Name="svShipMovement"  Grid.Row="1" Visibility="Hidden">
+            <ScrollViewer Name="svShipMovement"  Grid.Row="1" Visibility="Visible">
                 <Grid>
-                    <Label Content="Heading:" Margin="126,109,379,273" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>
-                    <Label Content="Speed:" Margin="126,167,379,215" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>
-                    <Label Content="BroadcastDelay:" Margin="126,226,379,156" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                    <Label Content="Type of Movement:" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold" Margin="74,31,379,587"/>
+                    <ComboBox Name="cbxMovementType" Margin="246,30,210,587">
+                        <ComboBoxItem x:Name="iLinear" Content="Linear" />
+                        <ComboBoxItem x:Name="iCircular" Content="Circular"/>
+                    </ComboBox>
+                    <Grid Name="grdLinearMovement">
+                        <Grid.Style>
+                            <Style>
+                                <Setter Property="Grid.Visibility" Value="Hidden"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=iLinear, Path=IsSelected}" Value="True">
+                                        <Setter Property="Grid.Visibility" Value="Visible"/>
+    
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <Label Content="Heading:" Margin="126,84,379,535" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                        <Label Content="Speed:" Margin="126,133,379,486" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                        <Label Content="BroadcastDelay:" Margin="126,180,379,439" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>
 
-                    <TextBox Name="txtHeading" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeOne.Heading}" Height="30" Margin="245,109,213,273" CharacterCasing="Upper"/>
-                    <TextBox Name="txtSpeed" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeOne.Speed}" Height="30" Margin="245,167,213,215" CharacterCasing="Upper"/>
-                    <TextBox Name="txtBroadcastDelay" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeOne.BroadcastDelay}" Height="30" Margin="245,226,213,156" CharacterCasing="Upper"/>
+                        <TextBox Name="txtHeading" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeOne.Heading}" Height="30" Margin="245,84,213,535" CharacterCasing="Upper"/>
+                        <TextBox Name="txtSpeedLinear" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeOne.Speed}" Height="30" Margin="245,133,213,486" CharacterCasing="Upper"/>
+                        <TextBox Name="txtBroadcastDelayLinear" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeOne.BroadcastDelay}" Height="30" Margin="245,180,213,439" CharacterCasing="Upper"/>
+                    </Grid>
+                    <Grid Name="grdCircularMovement">
+                        <Grid.Style>
+                            <Style>
+                                <Setter Property="Grid.Visibility" Value="Hidden"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=iCircular, Path=IsSelected}" Value="True">
+                                        <Setter Property="Grid.Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+                        <Label Content="Centre Point Longitude:" Margin="76,82,379,537" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                        <Label Content="Centre Point Latitude:" Margin="76,130,379,489" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                        <Label Content="Rate of Turn:" Margin="76,178,379,441" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                        <Label Content="Speed:" Margin="76,226,379,393" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                        <Label Content="Radius (km):" Margin="76,274,379,345" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                        <Label Content="Broadcast Delay:" Margin="76,322,379,297" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>
+
+                        <TextBox Name="txtCentrePointLong" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeOne.CentrePointLongitude}" Height="30" Margin="245,82,213,537" CharacterCasing="Upper"/>
+                        <TextBox Name="txtCentrePointLat" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeOne.CentrePointLatitude}" Height="30" Margin="245,130,213,489" CharacterCasing="Upper"/>
+                        <TextBox Name="txtROT" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeOne.Turn}" Height="30" Margin="245,178,213,441" CharacterCasing="Upper"/>
+                        <TextBox Name="txtSpeedCircular" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeOne.Speed}" Height="30" Margin="245,226,213,393" CharacterCasing="Upper"/>
+                        <TextBox Name="txtRadius" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeOne.Radius}" Height="30" Margin="245,274,213,345" CharacterCasing="Upper"/>
+                        <TextBox Name="txtBroadcastDelayCircular" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeOne.BroadcastDelay}" Height="30" Margin="245,322,213,297" CharacterCasing="Upper"/>
+                    </Grid>
                 </Grid>
             </ScrollViewer>
             <Grid Grid.Row="2">
