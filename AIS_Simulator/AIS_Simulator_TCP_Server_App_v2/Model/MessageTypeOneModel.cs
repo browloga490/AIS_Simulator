@@ -389,6 +389,19 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             }
         }
 
+        //Ship Motion values
+
+        private int _movementType;
+        public int MovementType
+        {
+            get => _movementType;
+            set
+            {
+                _movementType = value;
+                OnPropertyChanged("MovementType");
+            }
+        }
+
         //Circular Motion Values
 
         private string _radius;
@@ -460,6 +473,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             this.FillBitNum = "0";
             this.CheckSum = "";
 
+            this.MovementType = 0;
             this.Radius = "5";
             this.CentrePointLongitude = "180.0000";
             this.CentrePointLatitude = "90.0000";

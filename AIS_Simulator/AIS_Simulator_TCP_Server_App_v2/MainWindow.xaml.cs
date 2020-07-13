@@ -1,8 +1,12 @@
 ﻿//using AIS_Simulator_TCP_Server_App_v2.View;
+using AIS_Simulator_TCP_Server_App_v2.Model;
 using AIS_Simulator_TCP_Server_App_v2.ViewModel;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Device.Location;
+using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -25,7 +29,7 @@ namespace AIS_Simulator_TCP_Server_App_v2
     /// </summary>
     public partial class MainWindow : Window
     {
-        ShipViewModel VM = new ShipViewModel();
+        ShipViewModel VM;
 
         private static TcpListener _listener;
         private static bool serverON;
@@ -35,14 +39,27 @@ namespace AIS_Simulator_TCP_Server_App_v2
 
         public MainWindow()
         {
+            //Retrieve a saved state of the ShipViewModel (if one exists)
+            try
+            {
+                string json = System.IO.File.ReadAllText(String.Format(@"{0}\ViewModelState.txt", System.AppDomain.CurrentDomain.BaseDirectory));
+
+                VM = JsonConvert.DeserializeObject<ShipViewModel>(json);
+                VM.ShipList.Remove(VM.ShipList.First());
+            }
+
+            //Create a new instance of the ShipViewModel if a saved state does not exist
+            catch (FileNotFoundException e)
+            {
+                VM = new ShipViewModel();
+            }
+
             DataContext = VM;
             InitializeComponent();
 
             serverON = false;
             MainView.Visibility = Visibility.Visible;
             ConfigureView.Visibility = Visibility.Hidden;
-
-            VM.MovementTypeComboBox = cbxMovementType;
         }
 
         private void BtnStart_Click(object sender, RoutedEventArgs e)
@@ -107,6 +124,12 @@ namespace AIS_Simulator_TCP_Server_App_v2
         private void btnRemoveShip_Click(object sender, RoutedEventArgs e)
         {
             VM.removeShip();
+        }
+
+        private void WindowClosing(object sender, CancelEventArgs e)
+        {
+            string jsonData = JsonConvert.SerializeObject(VM);
+            System.IO.File.WriteAllText(String.Format(@"{0}\ViewModelState.txt", System.AppDomain.CurrentDomain.BaseDirectory), jsonData);
         }
     }
 }

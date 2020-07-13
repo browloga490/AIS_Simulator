@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AIS_Simulator_TCP_Server_App_v2.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="496.5" Width="634">
+        Title="MainWindow" Height="496.5" Width="634"
+        Closing="WindowClosing">
     <Grid>
         <Grid x:Name="MainView" Visibility="Hidden">
             <Label x:Name="lblHost" Content="Host" HorizontalAlignment="Left" Margin="61,43,0,0" VerticalAlignment="Top" Height="26" Width="35"/>
@@ -80,16 +81,18 @@
             <ScrollViewer Name="svShipMovement"  Grid.Row="1" Visibility="Visible">
                 <Grid>
                     <Label Content="Type of Movement:" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold" Margin="74,31,379,587"/>
-                    <ComboBox Name="cbxMovementType" Margin="246,30,210,587">
-                        <ComboBoxItem x:Name="iLinear" Content="Linear" />
-                        <ComboBoxItem x:Name="iCircular" Content="Circular"/>
-                    </ComboBox>
+                    <ComboBox Name="cbxMovementType" Margin="246,30,210,587"
+                              SelectedValue="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeOne.MovementType, Mode=TwoWay}"
+                              ItemsSource="{Binding MovementTypeList, Mode=OneTime}"
+                              SelectedValuePath="Key"
+                              DisplayMemberPath="Value"/>
                     <Grid Name="grdLinearMovement">
                         <Grid.Style>
                             <Style>
                                 <Setter Property="Grid.Visibility" Value="Hidden"/>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=iLinear, Path=IsSelected}" Value="True">
+                                    <DataTrigger Binding="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeOne.MovementType}" 
+                                                 Value="0">
                                         <Setter Property="Grid.Visibility" Value="Visible"/>
     
                                     </DataTrigger>
@@ -109,7 +112,8 @@
                             <Style>
                                 <Setter Property="Grid.Visibility" Value="Hidden"/>
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=iCircular, Path=IsSelected}" Value="True">
+                                    <DataTrigger Binding="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeOne.MovementType}" 
+                                                 Value="1">
                                         <Setter Property="Grid.Visibility" Value="Visible"/>
                                     </DataTrigger>
                                 </Style.Triggers>
