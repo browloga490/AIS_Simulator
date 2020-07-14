@@ -27,8 +27,8 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button x:Name="btnStartBrodcasting" Content="Start Brodcasting" HorizontalAlignment="Left" Margin="342,121,0,0" VerticalAlignment="Top" Width="104" Click="btnStartBrodcasting_Click"/>
-            <Button x:Name="btnStopBrodasting" Content="Stop Brodcasting" HorizontalAlignment="Left" Margin="342,146,0,0" VerticalAlignment="Top" Width="104" Click="btnStopBrodasting_Click"/>
+            <Button x:Name="btnStartBroadcasting" Content="Start Broadcasting" HorizontalAlignment="Left" Margin="342,121,0,0" VerticalAlignment="Top" Width="104" Click="btnStartBroadcasting_Click"/>
+            <Button x:Name="btnStopBroadcasting" Content="Stop Broadcasting" HorizontalAlignment="Left" Margin="342,146,0,0" VerticalAlignment="Top" Width="104" Click="btnStopBroadcasting_Click"/>
             <Button x:Name="btnConfigueShip" Content="Configure Ship" HorizontalAlignment="Left" Margin="342,196,0,0" VerticalAlignment="Top" Width="104" Click="BtnConfigueShip_Click"/>
             <Button x:Name="btnRemoveShip" Content="Remove Ship" HorizontalAlignment="Left" Margin="342,220,0,0" VerticalAlignment="Top" Width="104" Click="btnRemoveShip_Click"/>
             <Label x:Name="lblShipList" Content="Ships" HorizontalAlignment="Left" Margin="61,86,0,0" VerticalAlignment="Top"/>

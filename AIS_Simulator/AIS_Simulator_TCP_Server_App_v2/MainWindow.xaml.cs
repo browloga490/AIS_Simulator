@@ -1,26 +1,14 @@
-﻿//using AIS_Simulator_TCP_Server_App_v2.View;
-using AIS_Simulator_TCP_Server_App_v2.Model;
+﻿using AIS_Simulator_TCP_Server_App_v2.Model;
 using AIS_Simulator_TCP_Server_App_v2.ViewModel;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Device.Location;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace AIS_Simulator_TCP_Server_App_v2
 {
@@ -30,12 +18,6 @@ namespace AIS_Simulator_TCP_Server_App_v2
     public partial class MainWindow : Window
     {
         ShipViewModel VM;
-
-        private static TcpListener _listener;
-        private static bool serverON;
-        private static List<TcpClient> clientList;
-
-        private CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
 
         public MainWindow()
         {
@@ -57,7 +39,6 @@ namespace AIS_Simulator_TCP_Server_App_v2
             DataContext = VM;
             InitializeComponent();
 
-            serverON = false;
             MainView.Visibility = Visibility.Visible;
             ConfigureView.Visibility = Visibility.Hidden;
         }
@@ -114,19 +95,22 @@ namespace AIS_Simulator_TCP_Server_App_v2
             svShipMovement.Visibility = Visibility.Visible;
         }
 
-        private void btnStartBrodcasting_Click(object sender, RoutedEventArgs e)
+        private void btnStartBroadcasting_Click(object sender, RoutedEventArgs e)
         {
-            VM.startBroadcast();
+            if (!(lvShipList.SelectedValue == null))
+                VM.startBroadcast();
         }
 
-        private void btnStopBrodasting_Click(object sender, RoutedEventArgs e)
+        private void btnStopBroadcasting_Click(object sender, RoutedEventArgs e)
         {
-            VM.stopBroadcast();
+            if (!(lvShipList.SelectedValue == null))
+                VM.stopBroadcast();
         }
 
         private void btnRemoveShip_Click(object sender, RoutedEventArgs e)
         {
-            VM.removeShip();
+            if (!(lvShipList.SelectedValue == null))
+                VM.removeShip();
         }
 
         private void WindowClosing(object sender, CancelEventArgs e)

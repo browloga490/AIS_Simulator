@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
 using AIS_Simulator_TCP_Server_App_v2.Model;
-using Microsoft.SqlServer.Server;
-using Newtonsoft.Json;
 
 namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
 {
@@ -72,38 +67,46 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
 
         public void startTCPServer()
         {
-            if (!Server.ServerOn)
+            try
             {
-                Server.ClientList = new List<TcpClient>();
-
-                Server.ServerStatus += "Server starting...\n";
-
-                //Retrieve the input values for the host's ip address and port from the UI and start the TCP listener
-                System.Net.IPAddress ip = System.Net.IPAddress.Parse(Server.ServerHost);
-                Server.Listener = new TcpListener(ip, Convert.ToInt32(Server.ServerPort));
-                Server.Listener.Start();
-                Server.ServerOn = true;
-
-                Server.ServerStatus += "Server ON\n";
-
-                //Create a new thread to wait for connection requests while the rest of the app runs
-                Task.Run(() =>
+                if (!Server.ServerOn)
                 {
-                    while (Server.ServerOn)
-                    {
-                        try
-                        {
-                            //Waits for a client conection request
-                            TcpClient client = Server.Listener.AcceptTcpClient();
-                            NetworkStream stream = client.GetStream();
+                    Server.ClientList = new List<TcpClient>();
 
-                            //Adds client to the server's list of clients once a conncetion is established
-                            Server.ClientList.Add(client);
+                    Server.ServerStatus += "Server starting...\n";
+
+                    //Retrieve the input values for the host's ip address and port from the UI and start the TCP listener
+                    System.Net.IPAddress ip = System.Net.IPAddress.Parse(Server.ServerHost);
+                    Server.Listener = new TcpListener(ip, Convert.ToInt32(Server.ServerPort));
+                    Server.Listener.Start();
+                    Server.ServerOn = true;
+
+                    Server.ServerStatus += "Server ON\n";
+
+                    //Create a new thread to wait for connection requests while the rest of the app runs
+                    Task.Run(() =>
+                    {
+                        while (Server.ServerOn)
+                        {
+                            try
+                            {
+                                //Waits for a client conection request
+                                TcpClient client = Server.Listener.AcceptTcpClient();
+                                NetworkStream stream = client.GetStream();
+
+                                //Adds client to the server's list of clients once a conncetion is established
+                                Server.ClientList.Add(client);
+                            }
+                            catch (SocketException socExp) { }
                         }
-                        catch (SocketException socExp) { }
-                    }
-                }, Server.CancelTokenSource.Token);
+                    }, Server.CancelTokenSource.Token);
+                }
             }
+            catch (FormatException)
+            {
+                Server.ServerStatus += "ERROR : Failed to start server - invalid Host address and/or Port format\n";
+            }
+            
         }
 
         public void stopTCPServer()
@@ -239,8 +242,6 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
                 //Multiply the speed by 1.852 to convert it from knots to km/h
                 double speed = double.Parse(ship.MTypeOne.Speed) * 1.852;
 
-                
-
                 //Calculate the distance that the ship should travel between each 
                 //broadcast given the speed (km/h) and broadcast delay (seconds)
                 double distance = speed * broadcastDelay / 60 / 60;
@@ -268,7 +269,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
             {
                 ship.MTypeOne.Heading = "0";
 
-                int iterations = 0;
+                //int iterations = 0;
 
                 //for (int i=0; i < 500; i++)
                 //{
