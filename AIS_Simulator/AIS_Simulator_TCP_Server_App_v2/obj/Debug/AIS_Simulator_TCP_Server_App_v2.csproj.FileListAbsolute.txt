@@ -49,7 +49,6 @@ C:\Users\lbrown.pub\Source\Repos\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_S
 C:\Users\lbrown.pub\Source\Repos\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v2\obj\Debug\MainWindow.g.cs
 C:\Users\lbrown.pub\Source\Repos\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v2\obj\Debug\App.g.cs
 C:\Users\lbrown.pub\Source\Repos\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v2\obj\Debug\AIS_Simulator_TCP_Server_App_v2_MarkupCompile.cache
-C:\Users\lbrown.pub\Source\Repos\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v2\obj\Debug\AIS_Simulator_TCP_Server_App_v2_MarkupCompile.lref
 C:\Users\lbrown.pub\Source\Repos\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v2\obj\Debug\MainWindow.baml
 C:\Users\lbrown.pub\Source\Repos\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v2\obj\Debug\AIS_Simulator_TCP_Server_App_v2.g.resources
 C:\Users\lbrown.pub\Source\Repos\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v2\obj\Debug\AIS_Simulator_TCP_Server_App_v2.Properties.Resources.resources
