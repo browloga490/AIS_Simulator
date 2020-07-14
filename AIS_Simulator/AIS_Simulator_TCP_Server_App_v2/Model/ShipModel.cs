@@ -43,8 +43,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             get => _mTypeOne;
             set
             {
-                _mTypeOne = value;
-                _mTypeOne.generateSentence();
+                _mTypeOne = value;//removed a call to generateSenetence from here
                 OnPropertyChanged("MTypeOne");
             }
         }

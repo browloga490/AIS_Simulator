@@ -5,35 +5,15 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using AIS_Simulator_TCP_Server_App_v2.Model;
 
 namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
 {
     class ShipViewModel
     {
-        //TCP Server
-        private TCPServerModel _server;
-        public TCPServerModel Server
-        {
-            get => _server;
-            set => _server = value;
-        }
-
-        //Management of ShipModel instances
-        private ObservableCollection<ShipModel> _shipList;
-        public ObservableCollection<ShipModel> ShipList
-        {
-            get => _shipList;
-            set => _shipList = value;
-        }
-
-        private ShipModel _selectedShip;
-        public ShipModel SelectedShip
-        {
-            get => _selectedShip;
-            set => _selectedShip = value;
-        }
+        public TCPServerModel Server { get; set; }
+        public ObservableCollection<ShipModel> ShipList { get; set; }
+        public ShipModel SelectedShip { get; set; }
 
         //Key-Value Pairs for the Combo boxes in the UI
         private static readonly KeyValuePair<int, string>[] messageTypePosRepList = {
@@ -65,7 +45,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
             SelectedShip = ShipList[0];
         }
 
-        public void startTCPServer()
+        public void StartTCPServer()
         {
             try
             {
@@ -104,12 +84,12 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
             }
             catch (FormatException)
             {
-                Server.ServerStatus += "ERROR : Failed to start server - invalid Host address and/or Port format\n";
+                Server.ServerStatus += "ERROR : Failed to start server - invalid host address and/or port format\n";
             }
             
         }
 
-        public void stopTCPServer()
+        public void StopTCPServer()
         {
             if (Server.ServerOn)
             {
@@ -123,7 +103,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
             }
         }
 
-        public void saveConfiguration(string shipName)
+        public void SaveConfiguration(string shipName)
         {
             //Generates a new sentence based on the new/updated payload values
             //Creates a new template ship if a new ship was just been created
@@ -139,7 +119,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
             }
         }
 
-        public void removeShip()
+        public void RemoveShip()
         {
             //Removes the ship that is currently selected in the listbox if it is not the placeholder ship
             if (!SelectedShip.IsNewShip)
@@ -148,7 +128,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
             }
         }
 
-        public void startBroadcast ()
+        public void StartBroadcast ()
         {
             ShipModel tempShip = ShipList[ShipList.IndexOf(SelectedShip)];
 
@@ -176,8 +156,14 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
                             Server.SendToClients(posRepMessage);
                             Server.ServerStatus += String.Format("\nShip {0} :: Sent the message {1} to the clients\n", tempShip.MTypeFive.VesselName, tempShip.MTypeOne.Sentence);
 
-                            //Update the longitude and latitude values of the ship to simulate its motion
-                            moveShip(tempShip);
+                            //Update the longitude and latitude values of the ship (to simulate its motion) depending 
+                            //on the selected movement type
+                            if (tempShip.MTypeOne.MovementType == 0)
+                                LinearShipMovement(tempShip);
+
+                            else if (tempShip.MTypeOne.MovementType == 1)
+                                CircularShipMovement(tempShip);
+                            
 
                             //Make the thread wait for the desired broadcast delay time before sending the next broadcast
                             Thread.Sleep(tempShip.MTypeOne.BroadcastDelay * 1000);
@@ -214,7 +200,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
             
         }
 
-        public void stopBroadcast()
+        public void StopBroadcast()
         {
             //Turn off the currently selected ship's broadcast
             if (SelectedShip.BroadcastStatus.Equals("ON"))
@@ -224,93 +210,92 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
             }
         }
 
-        public void moveShip(ShipModel ship)
+        public void LinearShipMovement(ShipModel ship)
         {
             //Based on the set langitude, latitude, heading, speed, and broadcast delay of a ship, simulate its motion
 
             int broadcastDelay = ship.MTypeOne.BroadcastDelay;
 
-            //If the ship's movement type is set to circular movement
-            if (ship.MTypeOne.MovementType == 0)
-            {
-                //Retrieve the longitude, latitude, and heading values of the ship and convert them to radians
-                double longitudeOne = double.Parse(ship.MTypeOne.Longitude) * Math.PI / 180;
-                double latitudeOne = double.Parse(ship.MTypeOne.Latitude) * Math.PI / 180;
-                int heading = (int)(int.Parse(ship.MTypeOne.Heading) * Math.PI / 180);
+            //Retrieve the longitude, latitude, and heading values of the ship and convert them to radians
+            double longitudeOne = double.Parse(ship.MTypeOne.Longitude) * Math.PI / 180;
+            double latitudeOne = double.Parse(ship.MTypeOne.Latitude) * Math.PI / 180;
+            int heading = (int)(int.Parse(ship.MTypeOne.Heading) * Math.PI / 180);
 
-                //Multiply the speed by 1.852 to convert it from knots to km/h
-                double speed = double.Parse(ship.MTypeOne.Speed) * 1.852;
+            //Multiply the speed by 1.852 to convert it from knots to km/h
+            double speed = double.Parse(ship.MTypeOne.Speed) * 1.852;
 
-                //Calculate the distance that the ship should travel between each 
-                //broadcast given the speed (km/h) and broadcast delay (seconds)
-                double distance = speed * broadcastDelay / 60 / 60;
+            //Calculate the distance that the ship should travel between each 
+            //broadcast given the speed (km/h) and broadcast delay (seconds)
+            double distance = speed * broadcastDelay / 60 / 60;
 
-                //R is a constant representing the radius of the Earth
-                const double R = 6371;
+            //R is a constant representing the radius of the Earth
+            const double R = 6371;
 
-                //Calculate the new latitude and longitude values that the ship will have once it makes the next step in its path
-                double latitudeTwo = Math.Asin((Math.Sin(latitudeOne) * Math.Cos(distance / R)) +
-                          (Math.Cos(latitudeOne) * Math.Sin(distance / R) * Math.Cos(heading)));
+            //Calculate the new latitude and longitude values that the ship will have once it makes the next step in its path
+            double latitudeTwo = Math.Asin((Math.Sin(latitudeOne) * Math.Cos(distance / R)) +
+                        (Math.Cos(latitudeOne) * Math.Sin(distance / R) * Math.Cos(heading)));
 
-                double longitudeTwo = longitudeOne + Math.Atan2(Math.Sin(heading) * Math.Sin(distance / R) * Math.Cos(latitudeOne),
-                               Math.Cos(distance / R) - (Math.Sin(latitudeOne) * Math.Sin(latitudeTwo)));
+            double longitudeTwo = longitudeOne + Math.Atan2(Math.Sin(heading) * Math.Sin(distance / R) * Math.Cos(latitudeOne),
+                            Math.Cos(distance / R) - (Math.Sin(latitudeOne) * Math.Sin(latitudeTwo)));
 
-                Console.WriteLine("New Latitude : {0}", (latitudeTwo * 180 / Math.PI));
-                Console.WriteLine("New Longitude : {0}", (longitudeTwo * 180 / Math.PI));
+            Console.WriteLine("New Latitude : {0}", (latitudeTwo * 180 / Math.PI));
+            Console.WriteLine("New Longitude : {0}", (longitudeTwo * 180 / Math.PI));
 
-                //Update the ship's longitude and latitude values with the previously calculated values
-                ship.MTypeOne.Latitude = Convert.ToString(latitudeTwo * 180 / Math.PI);
-                ship.MTypeOne.Longitude = Convert.ToString(longitudeTwo * 180 / Math.PI);
-            }
+            //Update the ship's longitude and latitude values with the previously calculated values
+            ship.MTypeOne.Latitude = Convert.ToString(latitudeTwo * 180 / Math.PI);
+            ship.MTypeOne.Longitude = Convert.ToString(longitudeTwo * 180 / Math.PI);
+        }
 
-            //If the ship's movement type is set to linear movement
-            else if (ship.MTypeOne.MovementType == 1)
+        public void CircularShipMovement (ShipModel ship)
+        {
+            //Based on the set langitude, latitude, heading, speed, and broadcast delay of a ship, simulate its motion
+
+            int broadcastDelay = ship.MTypeOne.BroadcastDelay;
+
+            //ship.MTypeOne.Heading = "0";
+
+            //int iterations = 0;
+
+            //for (int i=0; i < 500; i++)
+            //{
+
+            if (double.Parse(ship.MTypeOne.Heading) > 359)
             {
                 ship.MTypeOne.Heading = "0";
+                //break;
+            }
 
-                //int iterations = 0;
+            //Retrieve the longitude, latitude, and heading values of the ship and convert them to radians
+            double centreLong = double.Parse(ship.MTypeOne.CentrePointLongitude) * Math.PI / 180;
+            double centreLat = double.Parse(ship.MTypeOne.CentrePointLatitude) * Math.PI / 180;
+            double heading = (double.Parse(ship.MTypeOne.Heading) * Math.PI / 180);
 
-                //for (int i=0; i < 500; i++)
-                //{
-                    
-                if (double.Parse(ship.MTypeOne.Heading) > 359)
-                {
-                    ship.MTypeOne.Heading = "0";
-                    //break;
-                }
+            //Retrieve the distance and broadcast delay values
+            double distance = double.Parse(ship.MTypeOne.Radius);
 
-                //Retrieve the longitude, latitude, and heading values of the ship and convert them to radians
-                double centreLong = double.Parse(ship.MTypeOne.CentrePointLongitude) * Math.PI / 180;
-                double centreLat = double.Parse(ship.MTypeOne.CentrePointLatitude) * Math.PI / 180;
-                double heading = (double.Parse(ship.MTypeOne.Heading) * Math.PI / 180);
-                    
-                //Retrieve the distance and broadcast delay values
-                double distance = double.Parse(ship.MTypeOne.Radius);
-
-                //R is a constant representing the radius of the Earth
-                const double R = 6371;
+            //R is a constant representing the radius of the Earth
+            const double R = 6371;
 
 
-                //Calculate the new latitude and longitude values that the ship will have once it makes the next step in its path
-                double latitudeTwo = Math.Asin((Math.Sin(centreLat) * Math.Cos(distance / R)) +
-                                (Math.Cos(centreLat) * Math.Sin(distance / R) * Math.Cos(heading)));
+            //Calculate the new latitude and longitude values that the ship will have once it makes the next step in its path
+            double latitudeTwo = Math.Asin((Math.Sin(centreLat) * Math.Cos(distance / R)) +
+                            (Math.Cos(centreLat) * Math.Sin(distance / R) * Math.Cos(heading)));
 
-                double longitudeTwo = centreLong + Math.Atan2(Math.Sin(heading) * Math.Sin(distance / R) * Math.Cos(centreLat),
-                                Math.Cos(distance / R) - (Math.Sin(centreLat) * Math.Sin(latitudeTwo)));
+            double longitudeTwo = centreLong + Math.Atan2(Math.Sin(heading) * Math.Sin(distance / R) * Math.Cos(centreLat),
+                            Math.Cos(distance / R) - (Math.Sin(centreLat) * Math.Sin(latitudeTwo)));
 
 
-                Console.WriteLine("{0}, {1}", (latitudeTwo * 180 / Math.PI), (longitudeTwo * 180 / Math.PI));
+            Console.WriteLine("{0}, {1}", (latitudeTwo * 180 / Math.PI), (longitudeTwo * 180 / Math.PI));
 
-                //Update the ship's longitude and latitude values with the previously calculated values
-                ship.MTypeOne.Latitude = Convert.ToString(latitudeTwo * 180 / Math.PI);
-                ship.MTypeOne.Longitude = Convert.ToString(longitudeTwo * 180 / Math.PI);
-                ship.MTypeOne.Heading = Convert.ToString(double.Parse(ship.MTypeOne.Heading) + double.Parse(ship.MTypeOne.Turn) * broadcastDelay / 60 / 60);
+            //Update the ship's longitude and latitude values with the previously calculated values
+            ship.MTypeOne.Latitude = Convert.ToString(latitudeTwo * 180 / Math.PI);
+            ship.MTypeOne.Longitude = Convert.ToString(longitudeTwo * 180 / Math.PI);
+            ship.MTypeOne.Heading = Convert.ToString(double.Parse(ship.MTypeOne.Heading) + double.Parse(ship.MTypeOne.Turn) * broadcastDelay / 60 / 60);
 
                 //iterations = i;
-                //}
+            //}
 
-                //Console.WriteLine("Circular path completed after {0} minutes.", ship.MTypeOne.BroadcastDelay*iterations);
-            }
+            //Console.WriteLine("Circular path completed after {0} minutes.", ship.MTypeOne.BroadcastDelay*iterations);
         }
 
     }

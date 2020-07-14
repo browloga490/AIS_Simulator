@@ -44,7 +44,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
                 OnPropertyChanged("MessageType");
                 if (initialized)
                 {
-                    generateSentence();
+                    GenerateSentence();
                 }
             }
         }
@@ -59,7 +59,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
                 OnPropertyChanged("Repeat");
                 if (initialized)
                 {
-                    generateSentence();
+                    GenerateSentence();
                 }
             }
         }
@@ -74,7 +74,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
                 OnPropertyChanged("MMSI");
                 if (initialized)
                 {
-                    generateSentence();
+                    GenerateSentence();
                 }
             }
         }
@@ -89,7 +89,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
                 OnPropertyChanged("NavStatus");
                 if (initialized)
                 {
-                    generateSentence();
+                    GenerateSentence();
                 }
             }
         }
@@ -104,7 +104,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
                 OnPropertyChanged("Turn");
                 if (initialized)
                 {
-                    generateSentence();
+                    GenerateSentence();
                 }
             }
         }
@@ -119,7 +119,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
                 OnPropertyChanged("Speed");
                 if (initialized)
                 {
-                    generateSentence();
+                    GenerateSentence();
                 }
             }
         }
@@ -134,7 +134,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
                 OnPropertyChanged("Accuracy");
                 if (initialized)
                 {
-                    generateSentence();
+                    GenerateSentence();
                 }
             }
         }
@@ -149,7 +149,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
                 OnPropertyChanged("Longitude");
                 if (initialized)
                 {
-                    generateSentence();
+                    GenerateSentence();
                 }
             }
         }
@@ -164,7 +164,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
                 OnPropertyChanged("Latitude");
                 if (initialized)
                 {
-                    generateSentence();
+                    GenerateSentence();
                 }
             }
         }
@@ -179,7 +179,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
                 OnPropertyChanged("Course");
                 if (initialized)
                 {
-                    generateSentence();
+                    GenerateSentence();
                 }
             }
         }
@@ -194,7 +194,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
                 OnPropertyChanged("Heading");
                 if (initialized)
                 {
-                    generateSentence();
+                    GenerateSentence();
                 }
             }
         }
@@ -209,7 +209,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
                 OnPropertyChanged("Timestamp");
                 if (initialized)
                 {
-                    generateSentence();
+                    GenerateSentence();
                 }
             }
         }
@@ -224,7 +224,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
                 OnPropertyChanged("Maneuver");
                 if (initialized)
                 {
-                    generateSentence();
+                    GenerateSentence();
                 }
             }
         }
@@ -239,7 +239,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
                 OnPropertyChanged("Spare");
                 if (initialized)
                 {
-                    generateSentence();
+                    GenerateSentence();
                 }
             }
         }
@@ -254,7 +254,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
                 OnPropertyChanged("RAIM");
                 if (initialized)
                 {
-                    generateSentence();
+                    GenerateSentence();
                 }
             }
         }
@@ -269,7 +269,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
                 OnPropertyChanged("Radio");
                 if (initialized)
                 {
-                    generateSentence();
+                    GenerateSentence();
                 }
             }
         }
@@ -286,7 +286,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
                 OnPropertyChanged("PacketID");
                 if (initialized)
                 {
-                    generateSentence();
+                    GenerateSentence();
                 }
             }
         }
@@ -301,7 +301,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
                 OnPropertyChanged("FragCount");
                 if (initialized)
                 {
-                    generateSentence();
+                    GenerateSentence();
                 }
             }
         }
@@ -316,7 +316,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
                 OnPropertyChanged("FragNum");
                 if (initialized)
                 {
-                    generateSentence();
+                    GenerateSentence();
                 }
             }
         }
@@ -331,7 +331,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
                 OnPropertyChanged("SequentialMessageID");
                 if (initialized)
                 {
-                    generateSentence();
+                    GenerateSentence();
                 }
             }
         }
@@ -346,7 +346,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
                 OnPropertyChanged("RadChanCode");
                 if (initialized)
                 {
-                    generateSentence();
+                    GenerateSentence();
                 }
             }
         }
@@ -372,7 +372,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
                 OnPropertyChanged("FillBitNum");
                 if (initialized)
                 {
-                    generateSentence();
+                    GenerateSentence();
                 }
             }
         }
@@ -478,32 +478,32 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             this.CentrePointLatitude = "90.0000";
 
             this.initialized = true;
-            generateSentence();
+            GenerateSentence();
         }
 
-        public void generateSentence()
+        public void GenerateSentence()
         {
             string[] binaryArray = new string[16];
             string binaryMessage;
             List<byte> asciiValList = new List<byte>();
 
             //Update the values of the binary array with the new converted input values
-            binaryArray[0] = convertIntegerToBinary(this.MessageType.ToString(), 6);
-            binaryArray[1] = convertIntegerToBinary(this.Repeat, 2);
-            binaryArray[2] = convertIntegerToBinary(this.MMSI, 30);
-            binaryArray[3] = convertIntegerToBinary(this.NavStatus, 4);
-            binaryArray[4] = convertIntegerToBinary((4.733 * Math.Sqrt(double.Parse(this.Turn))).ToString(), 8, 1);
-            binaryArray[5] = convertIntegerToBinary(this.Speed, 10);
-            binaryArray[6] = convertIntegerToBinary(this.Accuracy, 1);
-            binaryArray[7] = convertIntegerToBinary(this.Longitude, 28, 600000);
-            binaryArray[8] = convertIntegerToBinary(this.Latitude, 27, 600000);
-            binaryArray[9] = convertIntegerToBinary(this.Course, 12, 10);
-            binaryArray[10] = convertIntegerToBinary(this.Heading, 9);
-            binaryArray[11] = convertIntegerToBinary(this.Timestamp, 6);
-            binaryArray[12] = convertIntegerToBinary(this.Maneuver, 2);
-            binaryArray[13] = convertIntegerToBinary(this.Spare, 3);
-            binaryArray[14] = convertIntegerToBinary(this.RAIM, 1);
-            binaryArray[15] = convertIntegerToBinary(this.Radio, 19);
+            binaryArray[0] = ConvertIntegerToBinary(this.MessageType.ToString(), 6);
+            binaryArray[1] = ConvertIntegerToBinary(this.Repeat, 2);
+            binaryArray[2] = ConvertIntegerToBinary(this.MMSI, 30);
+            binaryArray[3] = ConvertIntegerToBinary(this.NavStatus, 4);
+            binaryArray[4] = ConvertIntegerToBinary((4.733 * Math.Sqrt(double.Parse(this.Turn))).ToString(), 8, 1);
+            binaryArray[5] = ConvertIntegerToBinary(this.Speed, 10);
+            binaryArray[6] = ConvertIntegerToBinary(this.Accuracy, 1);
+            binaryArray[7] = ConvertIntegerToBinary(this.Longitude, 28, 600000);
+            binaryArray[8] = ConvertIntegerToBinary(this.Latitude, 27, 600000);
+            binaryArray[9] = ConvertIntegerToBinary(this.Course, 12, 10);
+            binaryArray[10] = ConvertIntegerToBinary(this.Heading, 9);
+            binaryArray[11] = ConvertIntegerToBinary(this.Timestamp, 6);
+            binaryArray[12] = ConvertIntegerToBinary(this.Maneuver, 2);
+            binaryArray[13] = ConvertIntegerToBinary(this.Spare, 3);
+            binaryArray[14] = ConvertIntegerToBinary(this.RAIM, 1);
+            binaryArray[15] = ConvertIntegerToBinary(this.Radio, 19);
 
             binaryMessage = string.Join("", binaryArray);
 
@@ -553,7 +553,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             this.Sentence += "*" + this.CheckSum;
         }
 
-        public string convertIntegerToBinary(string num, int padding, int multiplier = 1)
+        public string ConvertIntegerToBinary(string num, int padding, int multiplier = 1)
         {
             ///Given a number in the form of a string (num), this method will
             ///return the binary representation of the number. If the number

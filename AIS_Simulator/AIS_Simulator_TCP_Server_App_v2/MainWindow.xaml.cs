@@ -2,12 +2,9 @@
 using AIS_Simulator_TCP_Server_App_v2.ViewModel;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Net.Sockets;
-using System.Threading;
 using System.Windows;
 
 namespace AIS_Simulator_TCP_Server_App_v2
@@ -45,13 +42,13 @@ namespace AIS_Simulator_TCP_Server_App_v2
 
         private void BtnStart_Click(object sender, RoutedEventArgs e)
         {
-            VM.startTCPServer();
+            VM.StartTCPServer();
             txtStatus.ScrollToEnd();
         }
 
         private void BtnStop_Click(object sender, RoutedEventArgs e)
         {
-            VM.stopTCPServer();
+            VM.StopTCPServer();
             txtStatus.ScrollToEnd();
         }
 
@@ -62,7 +59,7 @@ namespace AIS_Simulator_TCP_Server_App_v2
                 MainView.Visibility = Visibility.Hidden;
                 ConfigureView.Visibility = Visibility.Visible;
                 svStatVoyData.Visibility = Visibility.Hidden;
-                svShipMovement.Visibility = Visibility.Hidden;
+                grdShipMovement.Visibility = Visibility.Hidden;
                 svPosRep.Visibility = Visibility.Visible;
             }
         }
@@ -71,19 +68,19 @@ namespace AIS_Simulator_TCP_Server_App_v2
         {
             ConfigureView.Visibility = Visibility.Hidden;
             MainView.Visibility = Visibility.Visible;
-            VM.saveConfiguration(txtVesselName.Text);
+            VM.SaveConfiguration(txtVesselName.Text);
         }
 
         private void StatVoyDataMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            svShipMovement.Visibility = Visibility.Hidden;
+            grdShipMovement.Visibility = Visibility.Hidden;
             svPosRep.Visibility = Visibility.Hidden;
             svStatVoyData.Visibility = Visibility.Visible;
         }
 
         private void PosRepMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            svShipMovement.Visibility = Visibility.Hidden;
+            grdShipMovement.Visibility = Visibility.Hidden;
             svStatVoyData.Visibility = Visibility.Hidden;
             svPosRep.Visibility = Visibility.Visible;
         }
@@ -92,25 +89,25 @@ namespace AIS_Simulator_TCP_Server_App_v2
         {
             svPosRep.Visibility = Visibility.Hidden;
             svStatVoyData.Visibility = Visibility.Hidden;
-            svShipMovement.Visibility = Visibility.Visible;
+            grdShipMovement.Visibility = Visibility.Visible;
         }
 
-        private void btnStartBroadcasting_Click(object sender, RoutedEventArgs e)
+        private void BtnStartBroadcasting_Click(object sender, RoutedEventArgs e)
         {
             if (!(lvShipList.SelectedValue == null))
-                VM.startBroadcast();
+                VM.StartBroadcast();
         }
 
-        private void btnStopBroadcasting_Click(object sender, RoutedEventArgs e)
+        private void BtnStopBroadcasting_Click(object sender, RoutedEventArgs e)
         {
             if (!(lvShipList.SelectedValue == null))
-                VM.stopBroadcast();
+                VM.StopBroadcast();
         }
 
-        private void btnRemoveShip_Click(object sender, RoutedEventArgs e)
+        private void BtnRemoveShip_Click(object sender, RoutedEventArgs e)
         {
             if (!(lvShipList.SelectedValue == null))
-                VM.removeShip();
+                VM.RemoveShip();
         }
 
         private void WindowClosing(object sender, CancelEventArgs e)
