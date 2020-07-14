@@ -76,11 +76,14 @@ namespace AIS_Simulator_TCP_Server_App_v2
 
         private void BtnConfigueShip_Click(object sender, RoutedEventArgs e)
         {
-            MainView.Visibility = Visibility.Hidden;
-            ConfigureView.Visibility = Visibility.Visible;
-            svStatVoyData.Visibility = Visibility.Hidden;
-            svShipMovement.Visibility = Visibility.Hidden;
-            svPosRep.Visibility = Visibility.Visible;
+            if (!(lvShipList.SelectedValue == null))
+            {
+                MainView.Visibility = Visibility.Hidden;
+                ConfigureView.Visibility = Visibility.Visible;
+                svStatVoyData.Visibility = Visibility.Hidden;
+                svShipMovement.Visibility = Visibility.Hidden;
+                svPosRep.Visibility = Visibility.Visible;
+            }
         }
 
         private void BtnClose_Click(object sender, RoutedEventArgs e)
@@ -128,6 +131,7 @@ namespace AIS_Simulator_TCP_Server_App_v2
 
         private void WindowClosing(object sender, CancelEventArgs e)
         {
+            VM.Server = new TCPServerModel();
             string jsonData = JsonConvert.SerializeObject(VM);
             System.IO.File.WriteAllText(String.Format(@"{0}\ViewModelState.txt", System.AppDomain.CurrentDomain.BaseDirectory), jsonData);
         }
