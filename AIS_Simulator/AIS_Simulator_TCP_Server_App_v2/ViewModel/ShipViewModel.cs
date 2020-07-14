@@ -97,7 +97,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
                                 //Adds client to the server's list of clients once a conncetion is established
                                 Server.ClientList.Add(client);
                             }
-                            catch (SocketException socExp) { }
+                            catch (SocketException) { }
                         }
                     }, Server.CancelTokenSource.Token);
                 }
@@ -151,7 +151,6 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
         public void startBroadcast ()
         {
             ShipModel tempShip = ShipList[ShipList.IndexOf(SelectedShip)];
-            ComboBox tempCBX = new ComboBox();
 
             //Ensure that the selected ship is not already broadcasting and that the server is currently on
             if (tempShip.BroadcastStatus.Equals("OFF") && !tempShip.IsNewShip && Server.ServerOn)
@@ -178,12 +177,12 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
                             Server.ServerStatus += String.Format("\nShip {0} :: Sent the message {1} to the clients\n", tempShip.MTypeFive.VesselName, tempShip.MTypeOne.Sentence);
 
                             //Update the longitude and latitude values of the ship to simulate its motion
-                            moveShip(tempShip, tempCBX);
+                            moveShip(tempShip);
 
                             //Make the thread wait for the desired broadcast delay time before sending the next broadcast
                             Thread.Sleep(tempShip.MTypeOne.BroadcastDelay * 1000);
                         }
-                        catch (SocketException socExp) { }
+                        catch (SocketException) { }
                     }
                 }, Server.CancelTokenSource.Token);
 
@@ -207,7 +206,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
                             //Make the thread wait for the desired broadcast delay time before sending the next broadcast
                             Thread.Sleep(tempShip.MTypeOne.BroadcastDelay * 1000);
                         }
-                        catch (SocketException socExp) { }
+                        catch (SocketException) { }
                     }
                 }, Server.CancelTokenSource.Token);
 
@@ -225,7 +224,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
             }
         }
 
-        public void moveShip(ShipModel ship, ComboBox cbx)
+        public void moveShip(ShipModel ship)
         {
             //Based on the set langitude, latitude, heading, speed, and broadcast delay of a ship, simulate its motion
 

@@ -17,7 +17,7 @@ namespace AIS_Simulator_TCP_Server_App_v2
     /// </summary>
     public partial class MainWindow : Window
     {
-        ShipViewModel VM;
+        readonly ShipViewModel VM;
 
         public MainWindow()
         {
@@ -31,7 +31,7 @@ namespace AIS_Simulator_TCP_Server_App_v2
             }
 
             //Create a new instance of the ShipViewModel if a saved state does not exist
-            catch (FileNotFoundException e)
+            catch (FileNotFoundException)
             {
                 VM = new ShipViewModel();
             }

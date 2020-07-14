@@ -95,15 +95,6 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             ServerPort = "8910";
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
         public byte[] ReadToEnd(NetworkStream stream)
         {
             List<byte> recievedBytes = new List<byte>();
@@ -132,7 +123,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
                 {
                     client.GetStream().Write(data, 0, data.Length);
                 }
-                catch (IOException e)
+                catch (IOException)
                 {
                     toBeRemoved.Add(client);
                 }
@@ -142,6 +133,12 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             {
                 ClientList.Remove(client);
             }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

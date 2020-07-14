@@ -11,7 +11,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
     {
         public const string messageType = "5";
 
-        private bool initialized;
+        private readonly bool initialized;
 
         private string _sentenceOne;
         public string SentenceOne
@@ -417,7 +417,6 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             set
             {
                 _payloadOne = value;
-                //OnPropertyChanged("PayloadOne");
             }
         }
 
@@ -428,7 +427,6 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             set
             {
                 _payloadTwo = value;
-                //OnPropertyChanged("PayloadTwo");
             }
         }
 
@@ -532,9 +530,6 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             string tempStr;
             int tempInt;
 
-            Console.WriteLine("Binary message: {0}", binaryMessage);
-            Console.WriteLine("Length of binary message: {0}", binaryMessage.Length);
-
             //Iterate through the binaryMessage string converting every group of 6-bits to its ascii decimal value
             for (int i = 0; i < 424; i += 6)
             {
@@ -559,9 +554,6 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             //Convert binary values to decimal values and perform operations on them
 
             string tempPayload = Encoding.ASCII.GetString(asciiValList.ToArray());
-
-            Console.WriteLine("Temp Payload Val : {0}", tempPayload);
-            Console.WriteLine("Temp Payload Length : {0}", tempPayload.Length);
 
             this.PayloadOne = tempPayload.Substring(0, 60);
             this.PayloadTwo = tempPayload.Remove(0, 60);
@@ -600,9 +592,6 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             //Convert the checksum values to hexadecimal and add them to the end of their respective sentences
             this.SentenceOne += "*" + Convert.ToString(checkSumOne, 16).PadLeft(2, '0');
             this.SentenceTwo += "*" + Convert.ToString(checkSumTwo, 16).PadLeft(2, '0');
-
-            Console.WriteLine("Sentence 1 : {0}", this.SentenceOne);
-            Console.WriteLine("Sentence 2 : {0}", this.SentenceTwo);
         }
 
         public string convertIntegerToBinary(string num, int padding, int multiplier = 1)
@@ -660,14 +649,10 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
                 }
             }
 
-            Console.WriteLine("strVal length : {0} == {1}", strVal, result.Length);
-
             while (result.Length < padding)
             {
                 result += "000000";
             }
-
-            Console.WriteLine("strVal length after padding : {0} == {1}", strVal, result.Length);
 
             return result;
         }
@@ -675,10 +660,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
