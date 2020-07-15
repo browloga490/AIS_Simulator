@@ -8,8 +8,9 @@
         Width="708"
         Title="MainWindow" 
         Closing="WindowClosing">
+    
     <Grid>
-        <StackPanel x:Name="MainView" Visibility="Hidden" Margin="43,0" MinWidth="548" MinHeight="551" MaxWidth="548" MaxHeight="551">
+        <StackPanel x:Name="MainView" Visibility="Visible" Margin="43,0" MinWidth="548" MinHeight="551" MaxWidth="548" MaxHeight="551">
             <Border BorderBrush="Black" BorderThickness="2,2,2,0" Height="63">
                 <Grid HorizontalAlignment="Center" Width="468">
                     <Label x:Name="lblHost" Content="Host:" HorizontalAlignment="Left" Margin="-2,16,0,0" VerticalAlignment="Top" Height="26" Width="41" FontWeight="Bold"/>
@@ -50,12 +51,45 @@
             </Border>
 
         </StackPanel>
-        <StackPanel x:Name="ConfigureView" Visibility="Visible" MinWidth="658" MinHeight="551" MaxWidth="658" MaxHeight="551">
+        <StackPanel x:Name="ConfigureView" Visibility="Hidden" MinWidth="658" MinHeight="551" MaxWidth="658" MaxHeight="551">
             <Border BorderBrush="Black" BorderThickness="2,2,2,0" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Auto">
                 <Menu Name="Menu" Height="54">
-                    <MenuItem x:Name="PosRepMenuItem" Header="Position Report Class A" Height="54" FontWeight="Bold" BorderThickness="1" BorderBrush="Black" Click="PosRepMenuItem_Click"/>
-                    <MenuItem x:Name="StatVoyDataMenuItem" Header="Static and Voyage Related Data" Height="54" FontWeight="Bold" BorderThickness="1" BorderBrush="Black" Click="StatVoyDataMenuItem_Click"/>
-                    <MenuItem x:Name="ShipMotionMenuItem" Header="Ship Motion" Height="54" FontWeight="Bold" BorderThickness="1" BorderBrush="Black" Click="ShipMotionMenuItem_Click"/>
+                    <MenuItem x:Name="PosRepMenuItem" Header="Position Report Class A" Height="54" FontWeight="Bold" BorderThickness="1" BorderBrush="Black" Click="PosRepMenuItem_Click">
+                        <MenuItem.Style>
+                            <Style TargetType="MenuItem">
+                                <Style.Triggers>
+                                    <Trigger Property="IsFocused" Value="True">
+                                        <Setter Property="Background" Value="Aqua"/>
+                                        <Setter Property="Foreground" Value="Black"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </MenuItem.Style>
+                    </MenuItem>
+                    <MenuItem x:Name="StatVoyDataMenuItem" Header="Static and Voyage Related Data" Height="54" FontWeight="Bold" BorderThickness="1" BorderBrush="Black" Click="StatVoyDataMenuItem_Click">
+                        <MenuItem.Style>
+                            <Style TargetType="MenuItem">
+                                <Style.Triggers>
+                                    <Trigger Property="IsFocused" Value="True">
+                                        <Setter Property="Background" Value="Aqua"/>
+                                        <Setter Property="Foreground" Value="Black"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </MenuItem.Style>
+                    </MenuItem>
+                    <MenuItem x:Name="ShipMotionMenuItem" Header="Ship Motion" Height="54" FontWeight="Bold" BorderThickness="1" BorderBrush="Black" Click="ShipMotionMenuItem_Click">
+                        <MenuItem.Style>
+                            <Style TargetType="MenuItem">
+                                <Style.Triggers>
+                                    <Trigger Property="IsFocused" Value="True">
+                                        <Setter Property="Background" Value="Aqua"/>
+                                        <Setter Property="Foreground" Value="Black"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </MenuItem.Style>
+                    </MenuItem>
                 </Menu>
             </Border>
             <Border BorderBrush="Black" BorderThickness="2" Height="431">

@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
+using System.Windows.Media;
 
 namespace AIS_Simulator_TCP_Server_App_v2
 {
@@ -38,6 +39,8 @@ namespace AIS_Simulator_TCP_Server_App_v2
 
             MainView.Visibility = Visibility.Visible;
             ConfigureView.Visibility = Visibility.Hidden;
+
+            VM.ServerStatusBox = txtStatus;
         }
 
         private void BtnStart_Click(object sender, RoutedEventArgs e)
@@ -61,6 +64,7 @@ namespace AIS_Simulator_TCP_Server_App_v2
                 svStatVoyData.Visibility = Visibility.Hidden;
                 grdShipMovement.Visibility = Visibility.Hidden;
                 svPosRep.Visibility = Visibility.Visible;
+                PosRepMenuItem.Focus();
             }
         }
 
@@ -113,6 +117,8 @@ namespace AIS_Simulator_TCP_Server_App_v2
         private void WindowClosing(object sender, CancelEventArgs e)
         {
             VM.Server = new TCPServerModel();
+            VM.ServerStatusBox = null;
+
             string jsonData = JsonConvert.SerializeObject(VM);
             System.IO.File.WriteAllText(String.Format(@"{0}\ViewModelState.txt", System.AppDomain.CurrentDomain.BaseDirectory), jsonData);
         }

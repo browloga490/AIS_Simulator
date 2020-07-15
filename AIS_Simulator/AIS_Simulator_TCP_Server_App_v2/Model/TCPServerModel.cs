@@ -3,6 +3,9 @@ using System.ComponentModel;
 using System.IO;
 using System.Net.Sockets;
 using System.Threading;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace AIS_Simulator_TCP_Server_App_v2.Model
 {
@@ -92,7 +95,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             CancelTokenSource = new CancellationTokenSource();
             ServerStatus = "";
             ServerHost = "127.0.0.1";
-            ServerPort = "8910";
+            ServerPort = "8910"; 
         }
 
         public byte[] ReadToEnd(NetworkStream stream)

@@ -5,6 +5,9 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Threading;
 using AIS_Simulator_TCP_Server_App_v2.Model;
 
 namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
@@ -14,6 +17,8 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
         public TCPServerModel Server { get; set; }
         public ObservableCollection<ShipModel> ShipList { get; set; }
         public ShipModel SelectedShip { get; set; }
+
+        public TextBox ServerStatusBox { get; set; }
 
         //Key-Value Pairs for the Combo boxes in the UI
         private static readonly KeyValuePair<int, string>[] messageTypePosRepList = {
@@ -53,7 +58,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
                 {
                     Server.ClientList = new List<TcpClient>();
 
-                    Server.ServerStatus += "Server starting...\n";
+                    ServerStatusBox.AppendText("Server starting...\n");
 
                     //Retrieve the input values for the host's ip address and port from the UI and start the TCP listener
                     System.Net.IPAddress ip = System.Net.IPAddress.Parse(Server.ServerHost);
@@ -61,7 +66,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
                     Server.Listener.Start();
                     Server.ServerOn = true;
 
-                    Server.ServerStatus += "Server ON\n";
+                    UpdateServerStatus("Server ON\n");
 
                     //Create a new thread to wait for connection requests while the rest of the app runs
                     Task.Run(() =>
@@ -84,7 +89,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
             }
             catch (FormatException)
             {
-                Server.ServerStatus += "ERROR : Failed to start server - invalid host address and/or port format\n";
+                UpdateServerStatus("ERROR : Failed to start server - invalid host address and/or port format\n");
             }
             
         }
@@ -93,13 +98,23 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
         {
             if (Server.ServerOn)
             {
-                Server.ServerStatus += "Server stopping...\n";
+                //Reset all of the ship broadcast status to "OFF"
+                foreach (ShipModel ship in ShipList)
+                {
+                    if (ship.BroadcastStatus.Equals("ON"))
+                    {
+                        ship.BroadcastStatus = "OFF";
+                    }
+                }
+
+                //Stop the TCP listener
+                UpdateServerStatus("Server stopping...\n");
 
                 Server.ServerOn = false;
                 Server.CancelTokenSource.Cancel();
                 Server.Listener.Stop();
 
-                Server.ServerStatus += "Server OFF\n";
+                UpdateServerStatus("Server OFF\n");
             }
         }
 
@@ -136,7 +151,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
             if (tempShip.BroadcastStatus.Equals("OFF") && !tempShip.IsNewShip && Server.ServerOn)
             {
                 tempShip.BroadcastStatus = "ON";
-                Server.ServerStatus += String.Format("\nShip {0} :: Broadcast ON\n", tempShip.MTypeFive.VesselName);
+                UpdateServerStatus(String.Format("\nShip {0} :: Broadcast ON\n", tempShip.MTypeFive.VesselName));
 
                 byte[] posRepMessage;
                 byte[] statVoyMessage;
@@ -154,7 +169,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
                             //and send them to the connected clients
                             posRepMessage = Encoding.UTF8.GetBytes(tempShip.MTypeOne.Sentence);
                             Server.SendToClients(posRepMessage);
-                            Server.ServerStatus += String.Format("\nShip {0} :: Sent the message {1} to the clients\n", tempShip.MTypeFive.VesselName, tempShip.MTypeOne.Sentence);
+                            UpdateServerStatus(String.Format("\nShip {0} :: Sent the message {1} to the clients\n", tempShip.MTypeFive.VesselName, tempShip.MTypeOne.Sentence));
 
                             //Update the longitude and latitude values of the ship (to simulate its motion) depending 
                             //on the selected movement type
@@ -183,11 +198,11 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
                             //and send them to the connected clients
                             statVoyMessage = Encoding.UTF8.GetBytes(tempShip.MTypeFive.SentenceOne);
                             Server.SendToClients(statVoyMessage);
-                            Server.ServerStatus += String.Format("\nShip {0} :: Sent the message {1} to the clients\n", tempShip.MTypeFive.VesselName, tempShip.MTypeFive.SentenceOne);
+                            UpdateServerStatus(String.Format("\nShip {0} :: Sent the message {1} to the clients\n", tempShip.MTypeFive.VesselName, tempShip.MTypeFive.SentenceOne));
 
                             statVoyMessage = Encoding.UTF8.GetBytes(tempShip.MTypeFive.SentenceTwo);
                             Server.SendToClients(statVoyMessage);
-                            Server.ServerStatus += String.Format("\nShip {0} :: Sent the message {1} to the clients\n", tempShip.MTypeFive.VesselName, tempShip.MTypeFive.SentenceTwo);
+                            UpdateServerStatus(String.Format("\nShip {0} :: Sent the message {1} to the clients\n", tempShip.MTypeFive.VesselName, tempShip.MTypeFive.SentenceTwo));
 
                             //Make the thread wait for the desired broadcast delay time before sending the next broadcast
                             Thread.Sleep(tempShip.MTypeOne.BroadcastDelay * 1000);
@@ -206,7 +221,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
             if (SelectedShip.BroadcastStatus.Equals("ON"))
             {
                 SelectedShip.BroadcastStatus = "OFF";
-                Server.ServerStatus += String.Format("\nShip {0} :: Broadcast OFF\n", SelectedShip.MTypeFive.VesselName);
+                UpdateServerStatus(String.Format("\nShip {0} :: Broadcast OFF\n", SelectedShip.MTypeFive.VesselName));
             }
         }
 
@@ -219,7 +234,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
             //Retrieve the longitude, latitude, and heading values of the ship and convert them to radians
             double longitudeOne = double.Parse(ship.MTypeOne.Longitude) * Math.PI / 180;
             double latitudeOne = double.Parse(ship.MTypeOne.Latitude) * Math.PI / 180;
-            int heading = (int)(int.Parse(ship.MTypeOne.Heading) * Math.PI / 180);
+            double heading = double.Parse(ship.MTypeOne.Heading) * Math.PI / 180;
 
             //Multiply the speed by 1.852 to convert it from knots to km/h
             double speed = double.Parse(ship.MTypeOne.Speed) * 1.852;
@@ -296,6 +311,15 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
             //}
 
             //Console.WriteLine("Circular path completed after {0} minutes.", ship.MTypeOne.BroadcastDelay*iterations);
+        }
+
+        public void UpdateServerStatus(string message)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                ServerStatusBox.AppendText(message);
+                ServerStatusBox.ScrollToEnd();
+            });
         }
 
     }
