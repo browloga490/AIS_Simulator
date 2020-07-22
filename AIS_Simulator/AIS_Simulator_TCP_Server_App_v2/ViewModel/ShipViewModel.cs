@@ -56,6 +56,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
             {
                 if (!Server.ServerOn)
                 {
+                    Server = new TCPServerModel();
                     Server.ClientList = new List<TcpClient>();
 
                     ServerStatusBox.AppendText("Server starting...\n");

@@ -40,6 +40,8 @@ namespace AIS_Simulator_TCP_Server_App_v2
             MainView.Visibility = Visibility.Visible;
             ConfigureView.Visibility = Visibility.Hidden;
 
+            Console.WriteLine("CONVERRSION: 00100001 == {0}", Convert.ToInt32("00100001",2));
+
             VM.ServerStatusBox = txtStatus;
         }
 

@@ -63,7 +63,6 @@ C:\Users\Logoswego\Documents\MC-CM Files\AIS_Simulator\AIS_Simulator\AIS_Simulat
 C:\Users\Logoswego\Documents\MC-CM Files\AIS_Simulator\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v2\obj\Debug\MainWindow.g.cs
 C:\Users\Logoswego\Documents\MC-CM Files\AIS_Simulator\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v2\obj\Debug\App.g.cs
 C:\Users\Logoswego\Documents\MC-CM Files\AIS_Simulator\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v2\obj\Debug\AIS_Simulator_TCP_Server_App_v2_MarkupCompile.cache
-C:\Users\Logoswego\Documents\MC-CM Files\AIS_Simulator\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v2\obj\Debug\AIS_Simulator_TCP_Server_App_v2_MarkupCompile.lref
 C:\Users\Logoswego\Documents\MC-CM Files\AIS_Simulator\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v2\obj\Debug\MainWindow.baml
 C:\Users\Logoswego\Documents\MC-CM Files\AIS_Simulator\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v2\obj\Debug\AIS_Simulator_TCP_Server_App_v2.g.resources
 C:\Users\Logoswego\Documents\MC-CM Files\AIS_Simulator\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v2\obj\Debug\AIS_Simulator_TCP_Server_App_v2.Properties.Resources.resources
@@ -74,3 +73,6 @@ C:\Users\Logoswego\Documents\MC-CM Files\AIS_Simulator\AIS_Simulator\AIS_Simulat
 C:\Users\lbrown.pub\Source\Repos\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v2\bin\Debug\Newtonsoft.Json.dll
 C:\Users\lbrown.pub\Source\Repos\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v2\bin\Debug\Newtonsoft.Json.xml
 C:\Users\lbrown.pub\Source\Repos\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v2\obj\Debug\AIS_Simulator_TCP_Server_App_v2.csproj.CopyComplete
+C:\Users\Logoswego\Documents\MC-CM Files\AIS_Simulator\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v2\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Logoswego\Documents\MC-CM Files\AIS_Simulator\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v2\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Logoswego\Documents\MC-CM Files\AIS_Simulator\AIS_Simulator\AIS_Simulator\AIS_Simulator_TCP_Server_App_v2\obj\Debug\AIS_Simulator_TCP_Server_App_v2.csproj.CopyComplete
