@@ -63,7 +63,7 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
         {
             this.MTypeOne = new MessageTypeOneModel();
             this.MTypeFive = new MessageTypeFiveModel();
-            this._broadcastStatus = "OFF";
+            this.BroadcastStatus = "OFF";
             this.IsNewShip = true;
         }
 

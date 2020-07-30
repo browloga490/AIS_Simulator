@@ -630,6 +630,8 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
                 {
                     result += tempStr.PadLeft(padVal);
                 }
+                else
+                    result += tempStr;
             }
 
             while (result.Length < padding)

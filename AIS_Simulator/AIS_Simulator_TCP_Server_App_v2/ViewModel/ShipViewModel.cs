@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
@@ -12,9 +13,18 @@ using AIS_Simulator_TCP_Server_App_v2.Model;
 
 namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
 {
-    class ShipViewModel
+    class ShipViewModel : INotifyPropertyChanged
     {
-        public TCPServerModel Server { get; set; }
+        private TCPServerModel _server;
+        public TCPServerModel Server { 
+            get => _server;
+
+            set
+            {
+                _server = value;
+                OnPropertyChanged("Server");
+            } 
+        }
         public ObservableCollection<ShipModel> ShipList { get; set; }
         public ShipModel SelectedShip { get; set; }
 
@@ -56,7 +66,6 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
             {
                 if (!Server.ServerOn)
                 {
-                    Server = new TCPServerModel();
                     Server.ClientList = new List<TcpClient>();
 
                     ServerStatusBox.AppendText("Server starting...\n");
@@ -321,6 +330,12 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
                 ServerStatusBox.AppendText(message);
                 ServerStatusBox.ScrollToEnd();
             });
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
     }
