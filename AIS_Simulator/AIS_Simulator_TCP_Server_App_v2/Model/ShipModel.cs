@@ -67,6 +67,27 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             this.IsNewShip = true;
         }
 
+        public ShipModel(string vesselName, string callSign, string mmsi, ShipModel templateShip = null)
+        {
+            if (templateShip is null)
+            {
+                this.MTypeOne = new MessageTypeOneModel();
+                this.MTypeFive = new MessageTypeFiveModel(); 
+            }
+            else
+            {
+                this.MTypeOne = new MessageTypeOneModel(templateShip.MTypeOne);
+                this.MTypeFive = new MessageTypeFiveModel(templateShip.MTypeFive);
+            }
+
+            this.BroadcastStatus = "OFF";
+            this.IsNewShip = false;
+
+            this.MTypeFive.VesselName = vesselName;
+            this.MTypeFive.CallSign = callSign;
+            this.MMSI = mmsi;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {

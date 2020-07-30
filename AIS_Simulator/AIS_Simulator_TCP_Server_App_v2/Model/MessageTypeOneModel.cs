@@ -478,7 +478,49 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             this.CentrePointLatitude = "90.0000";
 
             this.initialized = true;
-            GenerateSentence();
+        }
+
+        public MessageTypeOneModel(MessageTypeOneModel templateMTypeOne)
+        {
+            this.initialized = false;
+
+            //Initializing message values from a given template
+
+            this.MessageType = templateMTypeOne.MessageType;
+            this.Repeat = templateMTypeOne.Repeat;
+            this.MMSI = templateMTypeOne.MMSI;
+            this.NavStatus = templateMTypeOne.NavStatus;
+            this.Turn = templateMTypeOne.Turn;
+            this.Speed = templateMTypeOne.Speed;
+            this.Accuracy = templateMTypeOne.Accuracy;
+            this.Longitude = templateMTypeOne.Longitude;
+            this.Latitude = templateMTypeOne.Latitude;
+            this.Course = templateMTypeOne.Course;
+            this.Heading = templateMTypeOne.Heading;
+            this.Timestamp = templateMTypeOne.Timestamp;
+            this.Maneuver = templateMTypeOne.Maneuver;
+            this.Spare = templateMTypeOne.Spare;
+            this.RAIM = templateMTypeOne.RAIM;
+            this.Radio = templateMTypeOne.Radio;
+
+            this.Sentence = templateMTypeOne.Sentence;
+            this.BroadcastDelay = templateMTypeOne.BroadcastDelay;
+
+            this.PacketID = templateMTypeOne.PacketID;
+            this.FragCount = templateMTypeOne.FragCount;
+            this.FragNum = templateMTypeOne.FragNum;
+            this.SequentialMessageID = templateMTypeOne.SequentialMessageID;
+            this.RadChanCode = templateMTypeOne.RadChanCode;
+            this.Payload = templateMTypeOne.Payload;
+            this.FillBitNum = templateMTypeOne.FillBitNum;
+            this.CheckSum = templateMTypeOne.CheckSum;
+
+            this.MovementType = templateMTypeOne.MovementType;
+            this.Radius = templateMTypeOne.Radius;
+            this.CentrePointLongitude = templateMTypeOne.CentrePointLongitude;
+            this.CentrePointLatitude = templateMTypeOne.CentrePointLatitude;
+
+            this.initialized = true;
         }
 
         public void GenerateSentence()

@@ -39,6 +39,7 @@ namespace AIS_Simulator_TCP_Server_App_v2
 
             MainView.Visibility = Visibility.Visible;
             ConfigureView.Visibility = Visibility.Hidden;
+            AddFleetView.Visibility = Visibility.Hidden;
 
             Console.WriteLine("CONVERRSION: 00100001 == {0}", Convert.ToInt32("00100001",2));
 
@@ -123,6 +124,26 @@ namespace AIS_Simulator_TCP_Server_App_v2
 
             string jsonData = JsonConvert.SerializeObject(VM);
             System.IO.File.WriteAllText(String.Format(@"{0}\ViewModelState.txt", System.AppDomain.CurrentDomain.BaseDirectory), jsonData);
+        }
+
+        private void btnAddFleet_Click(object sender, RoutedEventArgs e)
+        {
+            MainView.Visibility = Visibility.Hidden;
+            AddFleetView.Visibility = Visibility.Visible;
+        }
+
+        private void btnFinishNewFleet_Click(object sender, RoutedEventArgs e)
+        {
+            AddFleetView.Visibility = Visibility.Hidden;
+            MainView.Visibility = Visibility.Visible;
+
+            VM.AddFleet(txtBaseVesselName.Text, txtBaseCallSign.Text, txtBaseMMSI.Text, Convert.ToInt32(txtShipNum.Text));
+        }
+
+        private void btnCloseFleetView_Click(object sender, RoutedEventArgs e)
+        {
+            AddFleetView.Visibility = Visibility.Hidden;
+            MainView.Visibility = Visibility.Visible;
         }
     }
 }

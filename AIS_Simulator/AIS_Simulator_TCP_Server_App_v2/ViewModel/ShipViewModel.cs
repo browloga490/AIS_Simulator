@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
@@ -151,6 +152,42 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
             {
                 ShipList.Remove(SelectedShip);
             }
+        }
+
+        public void AddFleet(string name, string callSign, string mmsi, int shipNum)
+        {
+
+            if (SelectedShip.MTypeFive.VesselName.Equals("[ADD NEW SHIP]"))
+            {
+                ShipList.Remove(ShipList.Last());
+
+                for (int i = 0; i < shipNum; i++)
+                {
+                    ShipList.Add(
+                        new ShipModel(
+                            String.Format("{0} {1}", name, i),
+                            String.Format("{0}{1}", callSign.Substring(0, callSign.Length - i.ToString().Length), i),
+                            String.Format("{0}{1}", mmsi.Substring(0, mmsi.Length - i.ToString().Length), i))
+                    );
+                }
+            }
+            else
+            {
+                ShipList.Remove(ShipList.Last());
+
+                for (int i = 0; i < shipNum; i++)
+                {
+                    ShipList.Add(
+                        new ShipModel(
+                            String.Format("{0} {1}", name, i),
+                            String.Format("{0}{1}", callSign.Substring(0, callSign.Length - i.ToString().Length), i),
+                            String.Format("{0}{1}", mmsi.Substring(0, mmsi.Length - i.ToString().Length), i),
+                            SelectedShip)
+                    );
+                }
+            }
+
+            ShipList.Add(new ShipModel());
         }
 
         public void StartBroadcast ()

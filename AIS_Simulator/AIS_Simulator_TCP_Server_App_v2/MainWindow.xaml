@@ -4,13 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Height="632" 
+        Height="700" 
         Width="708"
         Title="MainWindow" 
         Closing="WindowClosing">
-    
+
     <Grid>
-        <StackPanel x:Name="MainView" Visibility="Visible" Margin="43,0" MinWidth="548" MinHeight="551" MaxWidth="548" MaxHeight="551">
+        <StackPanel x:Name="MainView" Visibility="Visible" Margin="43,0" MinWidth="548" MinHeight="640" MaxWidth="548" MaxHeight="600">
             <Border BorderBrush="Black" BorderThickness="2,2,2,0" Height="63">
                 <Grid HorizontalAlignment="Center" Width="468">
                     <Label x:Name="lblHost" Content="Host:" HorizontalAlignment="Left" Margin="-2,16,0,0" VerticalAlignment="Top" Height="26" Width="41" FontWeight="Bold"/>
@@ -50,9 +50,9 @@
                 </Grid>
             </Border>
 
-            <Border BorderBrush="Black" BorderThickness="2,2,2,0" Height="200">
+            <Border BorderBrush="Black" BorderThickness="2,2,2,0" Height="281">
                 <Grid HorizontalAlignment="Center">
-                    <ListView x:Name="lvShipList" HorizontalAlignment="Left" Height="135" Margin="-3,40,0,0" VerticalAlignment="Top" Width="280" ItemsSource="{Binding ShipList}" SelectedItem="{Binding SelectedShip}">
+                    <ListView x:Name="lvShipList" HorizontalAlignment="Left" Height="229" Margin="-31,40,0,0" VerticalAlignment="Top" Width="308" ItemsSource="{Binding ShipList}" SelectedItem="{Binding SelectedShip}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
@@ -63,7 +63,7 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                    <Button x:Name="btnStartBroadcasting" Content="Start Broadcasting" HorizontalAlignment="Left" Margin="344,46,0,0" VerticalAlignment="Top" Width="125" Click="BtnStartBroadcasting_Click" FontWeight="Bold">
+                    <Button x:Name="btnStartBroadcasting" Content="Start Broadcasting" HorizontalAlignment="Left" Margin="318,51,-10,0" VerticalAlignment="Top" Width="126" Click="BtnStartBroadcasting_Click" FontWeight="Bold">
                         <Button.Style>
                             <Style TargetType="Button">
                                 <Setter Property="IsEnabled" Value="False"/>
@@ -80,7 +80,7 @@
                             </Style>
                         </Button.Style>
                     </Button>
-                    <Button x:Name="btnStopBroadcasting" Content="Stop Broadcasting" HorizontalAlignment="Left" Margin="344,71,0,0" VerticalAlignment="Top" Width="125" Click="BtnStopBroadcasting_Click" FontWeight="Bold">
+                    <Button x:Name="btnStopBroadcasting" Content="Stop Broadcasting" HorizontalAlignment="Left" Margin="318,76,-10,0" VerticalAlignment="Top" Width="126" Click="BtnStopBroadcasting_Click" FontWeight="Bold">
                         <Button.Style>
                             <Style TargetType="Button">
                                 <Setter Property="IsEnabled" Value="False"/>
@@ -97,7 +97,7 @@
                             </Style>
                         </Button.Style>
                     </Button>
-                    <Button x:Name="btnConfigueShip" Content="Configure Ship" HorizontalAlignment="Left" Margin="344,121,0,0" VerticalAlignment="Top" Width="125" Click="BtnConfigueShip_Click" FontWeight="Bold">
+                    <Button x:Name="btnConfigueShip" Content="Configure Ship" HorizontalAlignment="Left" Margin="318,126,-10,0" VerticalAlignment="Top" Width="126" Click="BtnConfigueShip_Click" FontWeight="Bold">
                         <Button.Style>
                             <Style TargetType="Button">
                                 <Setter Property="IsEnabled" Value="True"/>
@@ -112,7 +112,7 @@
                             </Style>
                         </Button.Style>
                     </Button>
-                    <Button x:Name="btnRemoveShip" Content="Remove Ship" HorizontalAlignment="Left" Margin="344,145,0,0" VerticalAlignment="Top" Width="125" Click="BtnRemoveShip_Click" FontWeight="Bold">
+                    <Button x:Name="btnRemoveShip" Content="Remove Ship" HorizontalAlignment="Left" Margin="318,150,-10,0" VerticalAlignment="Top" Width="126" Click="BtnRemoveShip_Click" FontWeight="Bold">
                         <Button.Style>
                             <Style TargetType="Button">
                                 <Setter Property="IsEnabled" Value="False"/>
@@ -128,7 +128,8 @@
                             </Style>
                         </Button.Style>
                     </Button>
-                    <Label x:Name="lblShipList" Content="Ships" HorizontalAlignment="Left" Margin="-3,14,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+                    <Button x:Name="btnAddFleet" Content="Add Fleet" HorizontalAlignment="Left" Margin="318,201,-10,0" VerticalAlignment="Top" Width="126" FontWeight="Bold" Click="btnAddFleet_Click"/>
+                    <Label x:Name="lblShipList" Content="Ships" HorizontalAlignment="Left" Margin="-31,14,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
                 </Grid>
             </Border>
 
@@ -285,5 +286,87 @@
                 <Button Name="btnClose" Content="Save And Close" FontWeight="Bold" FontSize="18" Click="BtnClose_Click"/>
             </Border>
         </StackPanel>
+        <StackPanel x:Name="AddFleetView" Visibility="Hidden" MinWidth="658" MinHeight="640" MaxWidth="658" MaxHeight="600">
+            <Border BorderBrush="Black" BorderThickness="2,2,2,2" ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Auto">
+                <Grid>
+                    <ScrollViewer x:Name="svAddFleet" Visibility="Visible">
+                        <Grid Height="542">
+                            <ComboBox Name="cbxShipTemplate"  Margin="176,39,76,470"
+                              SelectedValue="{Binding ElementName=lvShipList, Path=SelectedItem, Mode=TwoWay}"
+                              ItemsSource="{Binding ShipList, Mode=OneTime}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding MTypeFive.VesselName}" Width="200" FontWeight="Bold"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <Label Content="Template Ship:" Margin="35,39,470,470" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                            <Label Content="Base Vessel Name:" Margin="35,119,470,393" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                            <Label Content="* A new vessel name must be set" Margin="371,119,61,393" VerticalContentAlignment="Center" FontWeight="Bold" Foreground="Red">
+                                <Label.Style>
+                                    <Style TargetType="Label">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=txtBaseVesselName, Path=Text}" Value="[ADD NEW SHIP]">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Label.Style>
+                            </Label>
+                            <Label Content="Base Call Sign:" Margin="35,175,470,337" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                            <Label Content="Base MMSI:" Margin="35,231,470,281" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                            <Label Content="Number of Ships:" Margin="35,328,470,184" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold"/>
+                            <Label Content="* Enter the number of ships that will be created" Margin="255,328,100,184" VerticalContentAlignment="Center" FontWeight="Bold" Foreground="Red">
+                                <Label.Style>
+                                    <Style TargetType="Label">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=txtShipNum, Path=Text}" Value="">
+                                                <Setter Property="Visibility" Value="Visible"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Label.Style>
+                            </Label>
+                            <TextBox Name="txtBaseVesselName" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeFive.VesselName, Mode=OneWay}" Height="30" Margin="176,119,282,393" MaxLines="1" CharacterCasing="Upper"/>
+                            <TextBox Name="txtBaseCallSign" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeFive.CallSign, Mode=OneWay}" Height="30" Margin="176,175,282,337" MaxLines="1" CharacterCasing="Upper"/>
+                            <TextBox Name="txtBaseMMSI" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MMSI, Mode=OneWay}" Height="30" Margin="176,231,282,281" MaxLines="1" CharacterCasing="Upper"/>
+                            <TextBox Name="txtShipNum" Height="30" Margin="176,328,398,184" MaxLines="1" IsUndoEnabled="True"/>
+                        </Grid>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="2,0,2,2" Height="61">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0"  Name="btnFinishNewFleet" Content="Add Fleet" FontWeight="Bold" FontSize="18" Click="btnFinishNewFleet_Click">
+                        <Button.Style>
+                            <Style TargetType="Button">
+                                <Setter Property="IsEnabled" Value="True"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=txtBaseVesselName, Path=Text}" Value="[ADD NEW SHIP]">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ElementName=lvShipList, Path=SelectedItem}" Value="{x:Null}">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding ElementName=txtShipNum, Path=Text}" Value="">
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button Grid.Column="1" Name="btnCloseFleetView" Content="Cancel" FontWeight="Bold" FontSize="18" Click="btnCloseFleetView_Click"/>
+                </Grid>
+            </Border>
+        </StackPanel>
+
     </Grid>
 </Window>

@@ -475,6 +475,46 @@ namespace AIS_Simulator_TCP_Server_App_v2.Model
             this.initialized = true;
         }
 
+        public MessageTypeFiveModel(MessageTypeFiveModel templateMTypeFive)
+        {
+            this.initialized = false;
+
+            //Initializing with default values
+
+            this.Repeat = templateMTypeFive.Repeat;
+            this.MMSI = templateMTypeFive.MMSI;
+            this.AISVersion = templateMTypeFive.AISVersion;
+            this.IMO = templateMTypeFive.IMO;
+            this.CallSign = templateMTypeFive.CallSign;
+            this.VesselName = templateMTypeFive.VesselName;
+            this.ShipType = templateMTypeFive.ShipType;
+            this.DimensionToBow = templateMTypeFive.DimensionToBow;
+            this.DimensionToStern = templateMTypeFive.DimensionToStern;
+            this.DimensionToPort = templateMTypeFive.DimensionToPort;
+            this.DimensionToStarboard = templateMTypeFive.DimensionToStarboard;
+            this.EPFD = templateMTypeFive.EPFD;
+            this.Month = templateMTypeFive.Month;
+            this.Day = templateMTypeFive.Day;
+            this.Hour = templateMTypeFive.Hour;
+            this.Minute = templateMTypeFive.Minute;
+            this.Draught = templateMTypeFive.Draught;
+            this.Destination = templateMTypeFive.Destination;
+            this.DTE = templateMTypeFive.DTE;
+            this.Spare = templateMTypeFive.Spare;
+
+            this.SentenceOne = templateMTypeFive.SentenceOne;
+            this.SentenceTwo = templateMTypeFive.SentenceTwo;
+            this.BroadcastDelay = templateMTypeFive.BroadcastDelay;
+
+            this.PacketID = templateMTypeFive.PacketID;
+            this.RadChanCode = templateMTypeFive.RadChanCode;
+            this.PayloadOne = templateMTypeFive.PayloadOne;
+            this.PayloadTwo = templateMTypeFive.PayloadTwo;
+            this.FillBitNum = templateMTypeFive.FillBitNum;
+
+            this.initialized = true;
+        }
+
         public void GenerateSentence()
         {
             string[] binaryArray = new string[21];
