@@ -312,8 +312,6 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
         {
             //Based on the set langitude, latitude, heading, speed, and broadcast delay of a ship, simulate its motion
 
-            int broadcastDelay = ship.MTypeOne.BroadcastDelay;
-
             //ship.MTypeOne.Heading = "0";
 
             //int iterations = 0;
@@ -332,19 +330,26 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
             double centreLat = double.Parse(ship.MTypeOne.CentrePointLatitude) * Math.PI / 180;
             double heading = (double.Parse(ship.MTypeOne.Heading) * Math.PI / 180);
 
-            //Retrieve the distance and broadcast delay values
-            double distance = double.Parse(ship.MTypeOne.Radius);
+            //Retrieve the radius of the circle and broadcast delay values
+            double radius = double.Parse(ship.MTypeOne.Radius);
+            int broadcastDelay = ship.MTypeOne.BroadcastDelay;
+
+            //Multiply the speed by 1.852 to convert it from knots to km/h
+            double speed = double.Parse(ship.MTypeOne.Speed) * 1.852;
 
             //R is a constant representing the radius of the Earth
             const double R = 6371;
 
+            //Calculate the angle that corresponds with the distance (arc length) that the ship will travel around the circle
+            double angularChange = (180 * speed * (Convert.ToDouble(broadcastDelay) / 3600)) / (Math.PI * radius);
+
 
             //Calculate the new latitude and longitude values that the ship will have once it makes the next step in its path
-            double latitudeTwo = Math.Asin((Math.Sin(centreLat) * Math.Cos(distance / R)) +
-                            (Math.Cos(centreLat) * Math.Sin(distance / R) * Math.Cos(heading)));
+            double latitudeTwo = Math.Asin((Math.Sin(centreLat) * Math.Cos(radius / R)) +
+                            (Math.Cos(centreLat) * Math.Sin(radius / R) * Math.Cos(heading)));
 
-            double longitudeTwo = centreLong + Math.Atan2(Math.Sin(heading) * Math.Sin(distance / R) * Math.Cos(centreLat),
-                            Math.Cos(distance / R) - (Math.Sin(centreLat) * Math.Sin(latitudeTwo)));
+            double longitudeTwo = centreLong + Math.Atan2(Math.Sin(heading) * Math.Sin(radius / R) * Math.Cos(centreLat),
+                            Math.Cos(radius / R) - (Math.Sin(centreLat) * Math.Sin(latitudeTwo)));
 
 
             Console.WriteLine("{0}, {1}", (latitudeTwo * 180 / Math.PI), (longitudeTwo * 180 / Math.PI));
@@ -352,7 +357,8 @@ namespace AIS_Simulator_TCP_Server_App_v2.ViewModel
             //Update the ship's longitude and latitude values with the previously calculated values
             ship.MTypeOne.Latitude = Convert.ToString(latitudeTwo * 180 / Math.PI);
             ship.MTypeOne.Longitude = Convert.ToString(longitudeTwo * 180 / Math.PI);
-            ship.MTypeOne.Heading = Convert.ToString(double.Parse(ship.MTypeOne.Heading) + double.Parse(ship.MTypeOne.Turn) * broadcastDelay / 60 / 60);
+            //ship.MTypeOne.Heading = Convert.ToString(double.Parse(ship.MTypeOne.Heading) + double.Parse(ship.MTypeOne.Turn) * (broadcastDelay / 60 / 60));
+            ship.MTypeOne.Heading = Convert.ToString(double.Parse(ship.MTypeOne.Heading) + angularChange);
 
                 //iterations = i;
             //}

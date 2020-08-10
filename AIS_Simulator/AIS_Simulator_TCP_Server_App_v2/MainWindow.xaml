@@ -265,17 +265,15 @@
                                     </Grid.Style>
                                     <Label Content="Centre Point Longitude (°):"  HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold" Margin="19,30,453,299"/>
                                     <Label Content="Centre Point Latitude (°):" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold" Margin="19,78,453,251"/>
-                                    <Label Content="Rate of Turn (°/min):" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold" Margin="19,126,453,203"/>
-                                    <Label Content="Speed (knot):" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold" Margin="19,174,453,155"/>
-                                    <Label Content="Radius (km):" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold" Margin="19,222,453,107"/>
-                                    <Label Content="Broadcast Delay (sec):" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold" Margin="19,270,453,59"/>
+                                    <Label Content="Speed (knot):" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold" Margin="19,126,453,203"/>
+                                    <Label Content="Radius (km):" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold" Margin="19,174,453,155"/>
+                                    <Label Content="Broadcast Delay (sec):" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" FontWeight="Bold" Margin="19,222,453,107"/>
 
                                     <TextBox Name="txtCentrePointLong" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeOne.CentrePointLongitude}" Height="30" Margin="189,30,269,299" CharacterCasing="Upper"/>
                                     <TextBox Name="txtCentrePointLat" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeOne.CentrePointLatitude}" Height="30" Margin="189,78,269,251" CharacterCasing="Upper"/>
-                                    <TextBox Name="txtROT" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeOne.Turn}" Height="30" Margin="189,126,269,203" CharacterCasing="Upper"/>
-                                    <TextBox Name="txtSpeedCircular" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeOne.Speed}" Height="30" Margin="189,174,269,155" CharacterCasing="Upper"/>
-                                    <TextBox Name="txtRadius" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeOne.Radius}" Height="30" Margin="189,222,269,107" CharacterCasing="Upper"/>
-                                    <TextBox Name="txtBroadcastDelayCircular" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeOne.BroadcastDelay}" Height="30" Margin="189,270,269,59" CharacterCasing="Upper"/>
+                                    <TextBox Name="txtSpeedCircular" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeOne.Speed}" Height="30" Margin="189,126,269,203" CharacterCasing="Upper"/>
+                                    <TextBox Name="txtRadius" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeOne.Radius}" Height="30" Margin="189,174,269,155" CharacterCasing="Upper"/>
+                                    <TextBox Name="txtBroadcastDelayCircular" Text="{Binding ElementName=lvShipList, Path=SelectedItem.MTypeOne.BroadcastDelay}" Height="30" Margin="189,222,269,107" CharacterCasing="Upper"/>
                                 </Grid>
                             </Grid>
                         </ScrollViewer>
